@@ -24,6 +24,15 @@
 					</li>
 					{% if app.user %}
 						<li class="nav-item">
+							<a class="nav-link" href="{{path('formations_index')}}">Formations</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('endroit_index')}}">Endroit</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('competence_index')}}">Competence</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
 						</li>
 					{% else %}
