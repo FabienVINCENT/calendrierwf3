@@ -4,80 +4,94 @@
 {% endblock %}
 
 {% block body %}
-	{% for flashError in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
-	{% endfor %}
+	<div class="container">
+		<div class="row">
 
-	<h1>Register</h1>
+			<h1 class="col-12">Enregistrement</h1>
 
+			<div class="col-12 px-5">
+				<div class="card register__form ">
+					<article class="card-body mx-auto">
 
-	<div class="card bg-light">
-		<article class="card-body mx-auto" style="max-width: 400px;">
-
-			{{ form_start(registrationForm) }}
-			<div class="form-group input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-user"></i>
-					</span>
+						{{ form_start(registrationForm) }}
+						{% for messages in app.flashes %}
+							{% for message in messages %}
+								<div class="alert alert-danger" role="alert">{{ message }}</div>
+							{% endfor %}
+						{% endfor %}
+						{% if not registrationForm.vars.valid %}
+							{# Loop through every form item #}
+							{% for child in registrationForm.children %}
+								{# Display the errors of the form item #}
+								{% for error in child.vars.errors %}
+									<div class="alert alert-danger" role="alert">{{ error.message }}</div>
+								{% endfor %}
+							{% endfor %}
+						{% endif %}
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-user"></i>
+								</span>
+							</div>
+							{{ form_widget(registrationForm.firstname) }}
+						</div>
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-user"></i>
+								</span>
+							</div>
+							{{ form_widget(registrationForm.lastname) }}
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-envelope"></i>
+								</span>
+							</div>
+							{{ form_widget(registrationForm.email) }}
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-phone"></i>
+								</span>
+							</div>
+							{{ form_widget(registrationForm.phoneNumber) }}
+						</div>
+						<!-- form-group end.// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-lock"></i>
+								</span>
+							</div>
+							{{ form_widget(registrationForm.plainPassword) }}
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-lock"></i>
+								</span>
+							</div>
+							{{ form_widget(registrationForm.confirmPassword) }}
+						</div>
+						<!-- form-group// -->
+						<div class="form-group form-check">
+							{{ form_widget(registrationForm.agreeTerms) }}
+							{{ form_label(registrationForm.agreeTerms) }}
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-block">S'enregistrer</button>
+						</div>
+						{{ form_end(registrationForm) }}
+					</article>
 				</div>
-				{{ form_widget(registrationForm.firstname) }}
 			</div>
-			<div class="form-group input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-user"></i>
-					</span>
-				</div>
-				{{ form_widget(registrationForm.lastname) }}
-			</div>
-			<!-- form-group// -->
-			<div class="form-group input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-envelope"></i>
-					</span>
-				</div>
-				{{ form_widget(registrationForm.email) }}
-			</div>
-			<!-- form-group// -->
-			<div class="form-group input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-phone"></i>
-					</span>
-				</div>
-				{{ form_widget(registrationForm.phoneNumber) }}
-			</div>
-			<!-- form-group end.// -->
-			<div class="form-group input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-lock"></i>
-					</span>
-				</div>
-				{{ form_widget(registrationForm.plainPassword) }}
-			</div>
-			<!-- form-group// -->
-			<div class="form-group input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-lock"></i>
-					</span>
-				</div>
-				{{ form_widget(registrationForm.confirmPassword) }}
-			</div>
-			<!-- form-group// -->
-			<div class="form-group form-check">
-				{{ form_widget(registrationForm.agreeTerms) }}
-				{{ form_label(registrationForm.agreeTerms) }}
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-block">S'enregistrer</button>
-			</div>
-			{{ form_end(registrationForm) }}
-		</article>
+		</div>
 	</div>
-
-
 {% endblock %}

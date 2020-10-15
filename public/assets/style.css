@@ -1,0 +1,30 @@
+body{
+    font-family:'Roboto Condensed','Open Sans',sans-serif!important;
+}
+
+.login__form .input-group-prepend {
+    color: #fff!important;
+    background-color: #fbe56e!important;
+    border: 1px solid #fbe56e!important;
+    border-radius: 4px 0 0 4px;    
+}
+
+.input-group-prepend .input-group-text {
+    color: #343d8c;
+    background-color: #fbe56e!important;
+    border: 1px solid #fbe56e!important;
+}
+
+.login__form .form-control {
+    border: 2px solid #fbe56e;
+    border-radius: 0 4px 4px 0;    
+}
+form .btn-primary {
+    color: #fff!important;
+    background-color: #343d8c!important;
+    border-color: #343d8c!important;
+}
+
+.navbar{
+    background: #343d8c;
+}

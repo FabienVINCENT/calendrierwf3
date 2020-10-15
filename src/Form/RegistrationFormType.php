@@ -42,7 +42,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('phoneNumber', TelType::class, [
                 'attr' => [
-                    'placeholder' => 'Numérop de téléphone',
+                    'placeholder' => 'Numéro de téléphone',
                     'class' => 'form-control'
                 ]
             ])
@@ -74,16 +74,17 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter a password',
                     ]),
-                    new Regex([
-                        'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/u',
-                        'message' => 'Votre mot de passe doit etre sécurisé'
-                    ]),
                     new Length([
-                        'min' => 6,
+                        'min' => 8,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    // TODO
+                    // new Regex([
+                    //     'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,})$/u',
+                    //     'message' => 'Votre mot de passe doit contenir : Une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial ( -, +, !, *, $, @, %, _ )'
+                    // ]),
                 ],
             ]);
     }

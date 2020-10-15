@@ -19,24 +19,29 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, UsersAuthenticator $authenticator): Response
     {
+        // Si user connecter on le dirige vers accueil
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // On vérifie que le password et la confirmation sont égaux
             if ($form->get('plainPassword')->getData() === $user->getConfirmPassword()) {
-                // encode the plain password
+                // encode le plainpassword
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
                         $form->get('plainPassword')->getData()
                     )
                 );
-
+                // Sauvegarde le user dans la bdd
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
-                // do anything else you need here, like send an email
 
                 return $guardHandler->authenticateUserAndHandleSuccess(
                     $user,
@@ -45,8 +50,9 @@ class RegistrationController extends AbstractController
                     'main' // firewall name in security.yaml
                 );
             } else {
+                // Sinon (les deux mot de passe sont différents)
                 $this->addFlash(
-                    'verify_email_error',
+                    'error',
                     'Les 2 mot de passes sont différents'
                 );
             }
