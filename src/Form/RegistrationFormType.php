@@ -22,10 +22,30 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('lastname', TextType::class)
-            ->add('firstname', TextType::class)
-            ->add('phoneNumber', TelType::class)
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'placeholder' => 'Votre mail',
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('lastname', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Nom',
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('firstname', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Prénom',
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('phoneNumber', TelType::class, [
+                'attr' => [
+                    'placeholder' => 'Numérop de téléphone',
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -34,19 +54,28 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('confirmPassword', PasswordType::class)
+            ->add('confirmPassword', PasswordType::class, [
+                'attr' => [
+                    'placeholder' => 'Confirmation mot de passe',
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 //^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$ 
                 //^\S(?=\S{8,})(?=\S[a-z])(?=\S[A-Z])(?=\S[\d])\S*$
+                'attr' => [
+                    'placeholder' => 'Mot de passe',
+                    'class' => 'form-control'
+                ],
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
                     ]),
                     new Regex([
-                        'pattern' => '/^\S(?=\S{8,})(?=\S[a-z])(?=\S[A-Z])(?=\S[\d])\S*$/u',
+                        'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/u',
                         'message' => 'Votre mot de passe doit etre sécurisé'
                     ]),
                     new Length([
