@@ -4,14 +4,12 @@
 
 {% block body %}
 
-	<div class="container-fluid min-vh-100" style="background-image: url('{{ asset('cle.jpg') }}');
-    background-attachment: fixed; background-size: cover; background-position: center center; opacity: 0.8">
+	<div class="container-fluid">
 
-	    <h1 class="text-center mt-5 p-5">Ajouter une nouvelle formation</h1>
-
-	    <div class="col-4 text-center border border-light mt-5 p-5 mx-auto" style="background-color:#E5E5E5FF">
+	    <div class="col-4 text-center border border-light mt-5 p-2 mx-auto" style="background-color:#E5E5E5FF">
+	    	<h1 class="text-center mt-3 p-2">Ajouter une nouvelle formation</h1>
 	    	{{ include('formations/_form.html.twig') }}
-	     	<a class="btn btn-md btn-info" style="border-radius: 10px" href="{{ path('formations_index') }}">Retour à la liste</a>
+	     	<a class="btn btn-md btn-info m-3" style="border-radius: 10px" href="{{ path('formations_index') }}">Retour à la liste</a>
 	    </div>
 
   	</div> 

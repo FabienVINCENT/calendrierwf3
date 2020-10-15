@@ -4,11 +4,15 @@
 
 {% block body %}
 
-    <h1>Edit Formations</h1>
-
-    {{ include('formations/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('formations_index') }}">Retour à la liste</a>
-
-    {{ include('formations/_delete_form.html.twig') }}
+	<div class="container-fluid">
+	    <div class="col-4 text-center border border-light mt-5 p-2 mx-auto" style="background-color:#E5E5E5FF">
+	    	<h1 class="text-center mt-3 p-2">Modifier la formation</h1>
+	    	
+	    	{{ include('formations/_form.html.twig', {'button_label': 'Update'}) }}
+	    	
+	    	{{ include('formations/_delete_form.html.twig') }}
+    	
+	     	<a class="btn btn-md btn-info m-3" style="border-radius: 10px" href="{{ path('formations_index') }}">Retour à la liste</a>
+	    </div>
+  	</div>    
 {% endblock %}

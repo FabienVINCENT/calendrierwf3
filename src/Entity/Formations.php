@@ -22,6 +22,12 @@ class Formations
      */
     private $nom;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Endroit::class, inversedBy="formations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $localisation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +41,18 @@ class Formations
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getLocalisation(): ?Endroit
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(?Endroit $localisation): self
+    {
+        $this->localisation = $localisation;
 
         return $this;
     }
