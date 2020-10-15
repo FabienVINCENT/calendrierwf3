@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Formations;
+use App\Entity\Endroit;
 use App\Form\FormationsType;
 use App\Repository\FormationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
