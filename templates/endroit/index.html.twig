@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Endroit index{% endblock %}
+
+{% block body %}
+    <h1>Endroit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ville</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for endroit in endroits %}
+            <tr>
+                <td>{{ endroit.id }}</td>
+                <td>{{ endroit.ville }}</td>
+                <td>
+                    <a href="{{ path('endroit_show', {'id': endroit.id}) }}">show</a>
+                    <a href="{{ path('endroit_edit', {'id': endroit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('endroit_new') }}">Create new</a>
+{% endblock %}
