@@ -17,6 +17,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Nom</th>
+                            <th>Ville</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <tr>
                                 <td>{{ formation.id }}</td>
                                 <td>{{ formation.nom }}</td>
+                                <td>{{ formation.localisation }}</td>
                                 <td>
                                     <a class="btn btn-info btn-sm" href="{{ path('formations_show', {'id': formation.id}) }}">Voir plus</a>
                                     <a class="btn btn-primary btn-sm" href="{{ path('formations_edit', {'id': formation.id}) }}">Modifier</a>
