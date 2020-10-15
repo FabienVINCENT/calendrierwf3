@@ -19,17 +19,17 @@
                 <td>{{ endroit.id }}</td>
                 <td>{{ endroit.ville }}</td>
                 <td>
-                    <a href="{{ path('endroit_show', {'id': endroit.id}) }}">show</a>
-                    <a href="{{ path('endroit_edit', {'id': endroit.id}) }}">edit</a>
+                    <a href="{{ path('endroit_show', {'id': endroit.id}) }}">Détail</a>
+                    <a href="{{ path('endroit_edit', {'id': endroit.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('endroit_new') }}">Create new</a>
+    <a href="{{ path('endroit_new') }}">Créer un nouvel endroit</a>
 {% endblock %}
