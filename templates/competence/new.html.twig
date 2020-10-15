@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add compétence{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une compétence</h1>
+
+    {{ include('competence/_form.html.twig') }}
+
+    <a href="{{ path('competence_index') }}">Retour</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Endroit{% endblock %}
+
+{% block body %}
+    <h1>Create new Endroit</h1>
+
+    {{ include('endroit/_form.html.twig') }}
+
+    <a href="{{ path('endroit_index') }}">back to list</a>
+{% endblock %}
