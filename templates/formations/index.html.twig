@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations index{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid min-vh-100" style="background-image: url('{{ asset('') }}');background-attachment: fixed; background-size: cover; background-position: center center; opacity: 0.8">
+
+        <div class="row">
+
+            <div class="container mt-5">
+
+                <h1 class="text-center mt-5 mb-3" style="font-family: 'Montserrat';">Liste des formations actuelles</h1>
+            
+                <div class="row">
+
+                    {% for formations in formations %}
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <div class="card h-100">
+                                <div class="container-fluid p-0 h-50">
+                                    <img src="" class="card-img-top h-100 w-100" alt="">
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ formations.nom }}</h4>
+                                    <a class="btn btn-sm btn-warning" style="border-radius: 10px" href="{{ path('formations_edit', {'id': formations.id}) }}">Modifier la formation</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <div>
+                            <p>Aucune formation à afficher</p>
+                        </div>
+                    {% endfor %}
+
+                    <div class="col-12 text-center">
+
+                        <a class="btn btn-primary white mt-5 text-center" href="{{ path('formations_new') }}">Ajouter une nouvelle formation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <h1>Formations index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.id }}</td>
+                <td>{{ formation.nom }}</td>
+                <td>
+                    <a href="{{ path('formations_show', {'id': formation.id}) }}">show</a>
+                    <a href="{{ path('formations_edit', {'id': formation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('formations_new') }}">Create new</a>
+{% endblock %}
