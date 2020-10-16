@@ -45,6 +45,11 @@ class DashboardController extends AbstractDashboardController
 
         // la deconnexion
         yield MenuItem::section('DECONNEXION');
+
+        // retour sur la page accueil
+        yield MenuItem::section('RETOUR MENU');
+
+
         //yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
     }
 }
