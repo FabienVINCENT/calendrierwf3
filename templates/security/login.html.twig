@@ -5,52 +5,50 @@
 
 {% block body %}
 
-	<div class="container">
-		<div class="row">
+	<div class="row">
 
-			<h1 class="col-12">Connexion</h1>
+		<h1 class="col-12">Connexion</h1>
 
-			<div class="col-12 px-5">
-				<div class="card login__form ">
-					<article class="card-body mx-auto">
-						<form method="post">
-							{% if error %}
-								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-							{% endif %}
+		<div class="col-12 px-5">
+			<div class="card login__form ">
+				<article class="card-body mx-auto">
+					<form method="post">
+						{% if error %}
+							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
 
-							<div class="form-group input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text">
-										<i class="fa fa-envelope"></i>
-									</span>
-								</div>
-								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required placeholder="Votre mail" autofocus>
-
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-envelope"></i>
+								</span>
 							</div>
-							<div class="form-group input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text">
-										<i class="fa fa-lock"></i>
-									</span>
-								</div>
-								<input type="password" name="password" id="inputPassword" class="form-control" required placeholder="Mot de passe">
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required placeholder="Votre mail" autofocus>
+
+						</div>
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-lock"></i>
+								</span>
 							</div>
+							<input type="password" name="password" id="inputPassword" class="form-control" required placeholder="Mot de passe">
+						</div>
 
-							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-							<div class="checkbox mb-3">
-								<label>
-									<input type="checkbox" name="_remember_me">
-									Se souvenir de moi
-								</label>
-							</div>
+						<div class="checkbox mb-3">
+							<label>
+								<input type="checkbox" name="_remember_me">
+								Se souvenir de moi
+							</label>
+						</div>
 
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary btn-block">Se connecter</button>
-							</div>
-						</form>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+						</div>
+					</form>
 
-					</div>
 				</div>
 			</div>
 		</div>

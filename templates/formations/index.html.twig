@@ -1,49 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formations index{% endblock %}
+{% block title %}Formations index
+{% endblock %}
 
 {% block body %}
 
-    <div class="container-fluid min-vh-100" style="background-image: url('{{ asset('') }}');background-attachment: fixed; background-size: cover; background-position: center center; opacity: 0.8">
+	<div class="row">
 
-        <div class="row">
 
-            <div class="container mt-5">
+		<h1 class="text-center mt-5 mb-3" style="font-family: 'Montserrat';">Liste des formations actuelles</h1>
 
-                <h1 class="text-center mt-5 mb-3" style="font-family: 'Montserrat';">Liste des formations actuelles</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nom</th>
+					<th>Ville</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for formation in formations %}
+					<tr>
+						<td>{{ formation.id }}</td>
+						<td>{{ formation.nom }}</td>
+						<td>{{ formation.localisation }}</td>
+						<td>
+							<a class="btn btn-info btn-sm" href="{{ path('formations_show', {'id': formation.id}) }}">Voir plus</a>
+							<a class="btn btn-primary btn-sm" href="{{ path('formations_edit', {'id': formation.id}) }}">Modifier</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="3">Aucunes formations présentes</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nom</th>
-                            <th>Ville</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for formation in formations %}
-                            <tr>
-                                <td>{{ formation.id }}</td>
-                                <td>{{ formation.nom }}</td>
-                                <td>{{ formation.localisation }}</td>
-                                <td>
-                                    <a class="btn btn-info btn-sm" href="{{ path('formations_show', {'id': formation.id}) }}">Voir plus</a>
-                                    <a class="btn btn-primary btn-sm" href="{{ path('formations_edit', {'id': formation.id}) }}">Modifier</a>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="3">Aucunes formations présentes</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <div class="row mx-auto">
-                    <a class="text-center" href="{{ path('formations_new') }}">Ajouter une nouvelle formation</a>
-                </div>           
-            </div>
-        </div>
-    </div>   
+		<div class="row mx-auto">
+			<a class="text-center" href="{{ path('formations_new') }}">Ajouter une nouvelle formation</a>
+		</div>
+	</div>
 {% endblock %}
