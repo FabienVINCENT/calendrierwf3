@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FormationsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FormationsRepository::class)
@@ -18,7 +20,12 @@ class Formations
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank (message = "Champ obligatoire")
+     * @Assert\Length(min = 5, max = 60,
+     *      minMessage = "Veuillez entrer 5 caractère au minimum",
+     *      maxMessage = "Veuillez entrer 60 caractère au maximum"
+     * )
      */
     private $nom;
 

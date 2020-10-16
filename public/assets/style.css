@@ -19,7 +19,7 @@ body{
     border: 2px solid #fbe56e;
     border-radius: 0 4px 4px 0;    
 }
-form .btn-primary {
+.btn-primary {
     color: #fff!important;
     background-color: #343d8c!important;
     border-color: #343d8c!important;
@@ -27,4 +27,18 @@ form .btn-primary {
 
 .navbar{
     background: #343d8c;
+}
+
+.btn-info
+{
+    color: #fff!important;
+    background-color: #46AEB5!important;
+    border-color: #46AEB5!important;
+}
+
+.btn-danger
+{
+    color: #fff!important;
+    background-color: #F25E57!important;
+    border-color: #F25E57!important;
 }

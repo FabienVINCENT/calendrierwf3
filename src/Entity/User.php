@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,6 +25,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "Le mail '{{ value }}' n'est pas valide."
+     * )
      */
     private $email;
 
@@ -53,9 +58,24 @@ class User implements UserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=17)
+     * @Assert\Regex(
+     *     pattern="/^((\+)33)[1-9](\d{2}){4}$/",
+     *     match=true,
+     *     message="Votre numero doit être sour forme : '+330612345678'"
+     * )
      */
     private $phoneNumber;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Competence::class, inversedBy="users")
+     */
+    private $talents;
+
+    public function __construct()
+    {
+        $this->talents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +199,32 @@ class User implements UserInterface
     public function setConfirmPassword(string $confirmPassword): self
     {
         $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Competence[]
+     */
+    public function getTalents(): Collection
+    {
+        return $this->talents;
+    }
+
+    public function addTalent(Competence $talent): self
+    {
+        if (!$this->talents->contains($talent)) {
+            $this->talents[] = $talent;
+        }
+
+        return $this;
+    }
+
+    public function removeTalent(Competence $talent): self
+    {
+        if ($this->talents->contains($talent)) {
+            $this->talents->removeElement($talent);
+        }
 
         return $this;
     }
