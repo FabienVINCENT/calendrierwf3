@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
                 // Sinon (les deux mot de passe sont différents)
                 $this->addFlash(
                     'error',
-                    'Les 2 mot de passes sont différents'
+                    'Les deux mots de passe sont différents !'
                 );
             }
         }
