@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // Creation d'un admin 
+        // Creation d'un admin
         $admin = new User();
         $admin->setEmail('admin@wf3.fr')
             ->setPassword($this->passwordEncoder->encodePassword(
@@ -96,7 +96,7 @@ class AppFixtures extends Fixture
         $formations = ['Devellopeur web', 'TSSR', 'Espagnol', 'Apprentissage du chant'];
         for ($i = 0; $i < 4; $i++) {
             $formation = new Formations();
-            $formation->setNom($formations[array_rand($formations)]);
+            $formation->setNom($formations[$i]);
             $formation->setLocalisation($endroits[array_rand($endroits)]);
             $manager->persist($formation);
         }
