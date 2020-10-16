@@ -23,3 +23,4 @@ class EndroitType extends AbstractType
         ]);
     }
 }
+
