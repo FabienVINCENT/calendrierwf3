@@ -28,26 +28,30 @@ class TestController extends AbstractController
      * @Route("/toto", name="endroit_list", methods={"GET"}, format="json")
      */
     public function villeList(EndroitRepository $endroitRepo)
-    
+
     {
         $villes = $endroitRepo->findAll();
         $liste = [];
-        foreach($villes as $ville){
-            $liste[] = 
-            [
-                'id' => $ville->getId(),
-                'ville' => $ville->getVille(),
-            ];
+        foreach ($villes as $ville) {
+            $liste[] =
+                [
+                    'id' => $ville->getId(),
+                    'ville' => $ville->getVille()
+                ];
         }
-        $data = json_encode($liste);
-        return $this->render('test/index.html.twig', compact('data'));
+
+        // Il faut retourner du json et pas du render sur un twig :
+
+        // return $this->render('test/index.html.twig');
+        return new JsonResponse($liste);
     }
+
 
     // /**
     // * @Route("/", name="formation_list", methods={"GET"}, format="json")
     // */
     // public function formationList(FormationsRepository $formRepo)
-    
+
     // {
     // $formRepo = $this->getDoctrine()->getRepository(Formations::class);
     // $reponse = $formRepo->findAll();
@@ -85,6 +89,3 @@ class TestController extends AbstractController
     //     }
     //     $encode_donnees = json_encode($data);
     // ]
-
-
-
