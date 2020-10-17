@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="Votre email est déjà enregistré")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -71,6 +72,11 @@ class User implements UserInterface
      * @ORM\ManyToMany(targetEntity=Competence::class, inversedBy="users")
      */
     private $talents;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudo;
 
     public function __construct()
     {
@@ -225,6 +231,22 @@ class User implements UserInterface
         if ($this->talents->contains($talent)) {
             $this->talents->removeElement($talent);
         }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setPseudo(): self
+    {
+        $this->pseudo = ucfirst($this->getFirstname()[0]) . '. ' . ucfirst($this->getLastname());
 
         return $this;
     }

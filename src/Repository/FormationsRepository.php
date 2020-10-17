@@ -19,6 +19,35 @@ class FormationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Formations::class);
     }
 
+
+    /**
+     * Function qui permet re recuperer la list des formations ainsi que l'endroit 
+     * {
+     *  "id": 1,
+     *  "nom": "Devellopeur web",
+     *  "localisation_id": 4,
+     *  "ville": "Hardy"
+     * }
+     */
+    public function getListFormation()
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.id, f.nom, fl.id as localisation_id, fl.ville')
+            ->leftJoin('f.localisation', 'fl')
+            ->getQuery()
+            ->getResult();
+    }
+    public function getListFormationById($value)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.id, f.nom, fl.id as localisation_id, fl.ville')
+            ->andWhere('f.id = :val')
+            ->setParameter('val', $value)
+            ->leftJoin('f.localisation', 'fl')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Formations[] Returns an array of Formations objects
     //  */

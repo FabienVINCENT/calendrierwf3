@@ -19,6 +19,25 @@ class EndroitRepository extends ServiceEntityRepository
         parent::__construct($registry, Endroit::class);
     }
 
+
+    public function getListVille()
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v.id, v.ville')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getListVilleById(int $id)
+    {
+        return $this->createQueryBuilder('v')
+            ->select('v.id, v.ville')
+            ->andWhere('v.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Endroit[] Returns an array of Endroit objects
     //  */
