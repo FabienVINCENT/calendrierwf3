@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{asset('assets/lib/fullcalendar/main.min.css')}}">
 	{{ parent() }}
 {% endblock %}
 
@@ -29,18 +29,19 @@
 			</div>
 
 
+			<div class="col-3"></div>
+
+			<div class="col-9 mt-3">
+				<div id="calendrier"></div>
+			</div>
+
 		</div>
 
-		<div class="col-9 mt-3">
-			<div id="calendrier"></div>
-		</div>
+	{% endblock %}
 
-	</div>
-
-{% endblock %}
-
-{% block javascripts %}
-	{{ parent() }}
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js" integrity="sha256-mMw9aRRFx9TK/L0dn25GKxH/WH7rtFTp+P9Uma+2+zc=" crossorigin="anonymous"></script>
-	<script src="{{asset('assets/js/calendrier.js')}}" type="text/javascript"></script>
-{% endblock %}
+	{% block javascripts %}
+		{{ parent() }}
+		<script src="{{asset('assets/lib/fullcalendar/main.min.js')}}" type="text/javascript"></script>
+		<script src="{{asset('assets/lib/fullcalendar/locales/fr.js')}}" type="text/javascript"></script>
+		<script src="{{asset('assets/js/calendrier.js')}}" type="text/javascript"></script>
+	{% endblock %}
