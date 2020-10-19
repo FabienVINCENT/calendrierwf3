@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FormationsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -35,6 +37,16 @@ class Formations
      */
     private $localisation;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Animer::class, mappedBy="fkAnimerFormation")
+     */
+    private $animers;
+
+    public function __construct()
+    {
+        $this->animers = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +72,37 @@ class Formations
     public function setLocalisation(?Endroit $localisation): self
     {
         $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Animer[]
+     */
+    public function getAnimers(): Collection
+    {
+        return $this->animers;
+    }
+
+    public function addAnimer(Animer $animer): self
+    {
+        if (!$this->animers->contains($animer)) {
+            $this->animers[] = $animer;
+            $animer->setFkAnimerFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimer(Animer $animer): self
+    {
+        if ($this->animers->contains($animer)) {
+            $this->animers->removeElement($animer);
+            // set the owning side to null (unless already changed)
+            if ($animer->getFkAnimerFormation() === $this) {
+                $animer->setFkAnimerFormation(null);
+            }
+        }
 
         return $this;
     }

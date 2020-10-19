@@ -78,9 +78,15 @@ class User implements UserInterface
      */
     private $pseudo;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Animer::class, mappedBy="fkAnimerUser")
+     */
+    private $animers;
+
     public function __construct()
     {
         $this->talents = new ArrayCollection();
+        $this->animers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +253,37 @@ class User implements UserInterface
     public function setPseudo(): self
     {
         $this->pseudo = ucfirst($this->getFirstname()[0]) . '. ' . ucfirst($this->getLastname());
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Animer[]
+     */
+    public function getAnimers(): Collection
+    {
+        return $this->animers;
+    }
+
+    public function addAnimer(Animer $animer): self
+    {
+        if (!$this->animers->contains($animer)) {
+            $this->animers[] = $animer;
+            $animer->setFkAnimerUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimer(Animer $animer): self
+    {
+        if ($this->animers->contains($animer)) {
+            $this->animers->removeElement($animer);
+            // set the owning side to null (unless already changed)
+            if ($animer->getFkAnimerUser() === $this) {
+                $animer->setFkAnimerUser(null);
+            }
+        }
 
         return $this;
     }
