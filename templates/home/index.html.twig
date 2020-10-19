@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier{% endblock %}
-	
-	{% block stylesheets %}
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
-		{{ parent() }}
-	{% endblock %}
+{% block title %}Calendrier
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('assets/lib/fullcalendar/main.min.css')}}">
+	{{ parent() }}
+{% endblock %}
 
 {% block body %}
 
 	<div class="row">
-		
+
 		<div class="col-3 mt-3">
 
 			<div class="formations mb-3">
@@ -20,14 +21,15 @@
 			</div>
 
 			<div class="formateurs">
-			
+
 				<h5>Liste des formateurs</h5>
 
 			</div>
 
 		</div>
 
-		<div class="col-9 mt-3">			
+
+		<div class="col-9 mt-3">
 			<div id="calendrier"></div>
 		</div>
 
@@ -57,6 +59,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js" integrity="sha256-mMw9aRRFx9TK/L0dn25GKxH/WH7rtFTp+P9Uma+2+zc=" crossorigin="anonymous"></script>
+	<script src="{{asset('assets/lib/fullcalendar/main.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('assets/lib/fullcalendar/locales/fr.js')}}" type="text/javascript"></script>
 	<script src="{{asset('assets/js/calendrier.js')}}" type="text/javascript"></script>
 {% endblock %}
