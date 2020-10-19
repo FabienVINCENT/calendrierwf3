@@ -93,7 +93,7 @@ class AppFixtures extends Fixture
             $manager->persist($endroit);
         }
         // Creation des formation
-        $formations = ['Devellopeur web', 'TSSR', 'Espagnol', 'Apprentissage du chant'];
+        $formations = ['Developpeur web', 'TSSR', 'Espagnol', 'Apprentissage du chant'];
         for ($i = 0; $i < 4; $i++) {
             $formation = new Formations();
             $formation->setNom($formations[$i]);

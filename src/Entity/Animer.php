@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use App\Repository\AnimerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AnimerRepository::class)
  */
 class Animer
 {
+
+    const JOURNEE = [0 => 'Journée complète', 1 => 'Matin', 2 => 'Après-midi'];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -22,10 +25,6 @@ class Animer
      */
     private $date;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $demiJournee;
 
     /**
      * @ORM\ManyToOne(targetEntity=Formations::class, inversedBy="animers")
@@ -35,8 +34,17 @@ class Animer
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="animers")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $fkAnimerUser;
+
+    /**
+     * @ORM\Column(type="smallint")
+     *      * @Assert\Range(min = 0,max = 2)
+     */
+    private $typeJournee;
+
+
 
     public function getId(): ?int
     {
@@ -51,18 +59,6 @@ class Animer
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getDemiJournee(): ?bool
-    {
-        return $this->demiJournee;
-    }
-
-    public function setDemiJournee(bool $demiJournee): self
-    {
-        $this->demiJournee = $demiJournee;
 
         return $this;
     }
@@ -87,6 +83,23 @@ class Animer
     public function setFkAnimerUser(?User $fkAnimerUser): self
     {
         $this->fkAnimerUser = $fkAnimerUser;
+
+        return $this;
+    }
+
+    public function getTypeJournee(): ?int
+    {
+        return $this->typeJournee;
+    }
+
+    public function getTypeFormatedJournee(): ?string
+    {
+        return self::JOURNEE[$this->typeJournee];
+    }
+
+    public function setTypeJournee(int $typeJournee): self
+    {
+        $this->typeJournee = $typeJournee;
 
         return $this;
     }

@@ -109,6 +109,6 @@ class Formations
 
     public function __toString()
     {
-        return $this->getNom() . '-' . $this->getLocalisation()->getVille();
+        return $this->getNom() . ' - ' . $this->getLocalisation()->getVille();
     }
 }
