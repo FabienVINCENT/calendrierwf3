@@ -12,8 +12,14 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->render('home/index.html.twig');        
+    }
+
+     /**
+     * @Route("/boutons", name="home_boutons")
+     */
+    public function boutons()
+    {
+        return $this->render('home/boutons.html.twig');
     }
 }

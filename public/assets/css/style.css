@@ -42,3 +42,8 @@ body{
     background-color: #F25E57!important;
     border-color: #F25E57!important;
 }
+
+#calendrier
+{
+    height: 90vh;
+}
