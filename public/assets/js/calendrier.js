@@ -1,8 +1,7 @@
-window.onload = () =>
-{
+window.onload = () => {
 	let calendarElt = document.querySelector("#calendrier")
 
-	let calendar= new FullCalendar.Calendar (calendarElt, {
+	let calendar = new FullCalendar.Calendar(calendarElt, {
 
 		initialView: 'dayGridMonth',
 		locale: 'fr',
@@ -15,16 +14,16 @@ window.onload = () =>
 		editable: true,
 		eventResizableFromStart: true,
 		selectable: true,
-		dateClick : function(info) {
+		dateClick: function (info) {
 
 			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+			$('#animer_date').val(info.dateStr);
+			let dateObjet = new Date(info.dateStr);
 
-			let dateObjet= new Date (info.dateStr);
-
-				$('#modalAjoutDate').modal('show');
-				$('#modalAjoutDateTitle').html('Enregistrement pour le ' + dateObjet.toLocaleDateString('fr-FR',options));
-			}
+			$('#modalAjoutDate').modal('show');
+			$('#modalAjoutDateTitle').html('Enregistrement pour le ' + dateObjet.toLocaleDateString('fr-FR', options));
+		}
 	})
-	
+
 	calendar.render()
 }
