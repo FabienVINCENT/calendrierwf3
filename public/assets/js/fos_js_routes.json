@@ -1,0 +1,1 @@
+{"base_url":"","routes":{"listUser":{"tokens":[["text","\/user\/listUser"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":["GET"],"schemes":[]},"home":{"tokens":[["text","\/"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":[],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":[]}

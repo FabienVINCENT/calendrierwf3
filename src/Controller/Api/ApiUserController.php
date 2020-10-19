@@ -14,11 +14,11 @@ class ApiUserController extends AbstractController
      */
     public function index()
     {
-      dd('coucou');
+        dd('coucou');
     }
 
-     /**
-     * @Route("/user/listUser", name="listUser", methods={"GET"}, format="json")
+    /**
+     * @Route("/user/listUser", name="listUser", methods={"GET"}, format="json" , options = { "expose" = true })
      */
     public function listUser(UserRepository $userRepository)
     {
@@ -31,5 +31,4 @@ class ApiUserController extends AbstractController
     {
         return $this->json($userRepository->getInfosUserById($user->getId()));
     }
-
 }
