@@ -9,7 +9,6 @@ use App\Repository\UserRepository;
 use App\Repository\EndroitRepository;
 use App\Repository\FormationsRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -71,14 +70,5 @@ class ApiController extends AbstractController
     public function getInfoUser(User $user, UserRepository $userRepository)
     {
         return $this->json($userRepository->getInfosUserById($user->getId()));
-    }
-    /**
-     * @Route("/user/{id}/tata", name="getFormation", methods={"GET"})
-     */
-    public function getInfoUserTata(User $user, SerializerInterface $serializer, UserRepository $userRepository)
-    {
-        // dd($userRepository->getInfosUserByIdTata($user->getId()));
-        dd($serializer->encode($userRepository->getInfosUserByIdTata($user->getId()), "json"));
-        return $this->json($userRepository->getInfosUserByIdTata($user->getId()));
     }
 }
