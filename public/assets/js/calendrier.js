@@ -14,7 +14,15 @@ window.onload = () => {
 		editable: true,
 		eventResizableFromStart: true,
 		selectable: true,
-		dateClick: function (info) {
+		weekends: false,
+		weekNumbers: true,
+		businessHours: {
+		  // days of week. an array of zero-based day of week integers (0=Sunday)
+		  daysOfWeek: [ 1, 2, 3, 4, 5 ], // Monday - Thursday
+		  startTime: '08:00', // a start time (10am in this example)
+		  endTime: '18:00', // an end time (6pm in this example)
+		},
+		dateClick : function(info) {
 
 			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 			$('#animer_date').val(info.dateStr);
