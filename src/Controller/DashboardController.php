@@ -34,22 +34,23 @@ class DashboardController extends AbstractDashboardController
     // configuration du menu principal
     public function configureMenuItems(): iterable
     {
-        // entete
+        // retour sur la page accueil
+        yield MenuItem::section('RETOUR MENU');
+            yield MenuItem::linkToRoute('Retour accueil', 'far fa-calendar-alt', 'home');
+
+        // le menu general
         yield MenuItem::section('GESTION DES DONNEES');
-        // la gestion du menu avec les entitées relièes
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Gérer les compétences', 'fas fa-code', Competence::class);
-        yield MenuItem::linkToCrud('Gérer les endroits', 'fas fa-city', Endroit::class);
-        yield MenuItem::linkToCrud('Gérer les formations', 'fas fa-graduation-cap', Formations::class);
-        yield MenuItem::linkToCrud('Gérer les utilisateurs', 'fas fa-users', User::class);
+            // la gestion du menu avec les entitées relièes
+            yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
+            yield MenuItem::linkToCrud('Gérer les compétences', 'fas fa-code', Competence::class);
+            yield MenuItem::linkToCrud('Gérer les endroits', 'fas fa-city', Endroit::class);
+            yield MenuItem::linkToCrud('Gérer les formations', 'fas fa-graduation-cap', Formations::class);
+            yield MenuItem::linkToCrud('Gérer les utilisateurs', 'fas fa-users', User::class);
 
         // la deconnexion
         yield MenuItem::section('DECONNEXION');
-
-        // retour sur la page accueil
-        yield MenuItem::section('RETOUR MENU');
+            yield MenuItem::linkToLogout('Logout', 'fas fa-times');
 
 
-        //yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
     }
 }
