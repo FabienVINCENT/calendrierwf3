@@ -16,6 +16,6 @@ window.onload = () =>
 		eventResizableFromStart: true,
 		selectable: true
 	})
-	
+
 	calendar.render()
 }

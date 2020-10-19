@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
+
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
@@ -23,6 +24,10 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
+
+        // integration de FOSJsRoutingBundle
+        //yield new FOS\JsRoutingBundle\FOSJsRoutingBundle();
+
     }
 
     public function getProjectDir(): string

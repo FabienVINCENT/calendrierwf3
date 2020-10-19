@@ -14,7 +14,6 @@ use App\Entity\Endroit;
 use App\Entity\Formations;
 use App\Entity\User;
 
-
 class DashboardController extends AbstractDashboardController
 {
     /**

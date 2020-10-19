@@ -4,15 +4,16 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use FOS\JsRoutingBundle\FOSJsRoutingBundle;
 
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="home", options = { "expose" = true })
      */
     public function index()
     {
-        return $this->render('home/index.html.twig');        
+        return $this->render('home/index.html.twig');
     }
 
      /**

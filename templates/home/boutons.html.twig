@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
- 
+
  <div class="mt-5">
  	<a class="btn btn-primary">bouton principal</a>
  </div>
@@ -14,4 +14,16 @@
   <div class="mt-5">
  	<a class="btn btn-danger">bouton effacer</a>
  </div>
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('testRoute') }}
+
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script> -->
 {% endblock %}
