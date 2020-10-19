@@ -1,38 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Calendrier{% endblock %}
-	
-	{% block stylesheets %}
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
-		{{ parent() }}
-	{% endblock %}
+{% block title %}Calendrier
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+	{{ parent() }}
+{% endblock %}
 
 {% block body %}
 
 	<div class="row">
-		
+
 		<div class="col-3 mt-3">
 
 			<div class="formations mb-3">
 
 				<h5>Liste des formations</h5>
 
-				{{  }}
 
 			</div>
 
 			<div class="formateurs">
-			
+
 				<h5>Liste des formateurs</h5>
 
-				{{  }}
 
 			</div>
-			
+
 
 		</div>
 
-		<div class="col-9 mt-3">			
+		<div class="col-9 mt-3">
 			<div id="calendrier"></div>
 		</div>
 
