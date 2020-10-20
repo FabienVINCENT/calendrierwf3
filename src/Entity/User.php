@@ -252,7 +252,7 @@ class User implements UserInterface
      */
     public function setPseudo(): self
     {
-        $this->pseudo = ucfirst(substr($this->getFirstname(), 0, 1)) . '. ' . ucfirst($this->getLastname());
+        $this->pseudo = ucfirst(mb_substr($this->getFirstname(), 0, 1)) . '. ' . ucfirst($this->getLastname());
 
         return $this;
     }

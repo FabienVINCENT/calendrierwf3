@@ -35,6 +35,7 @@ class AnimerType extends AbstractType
             ])
             ->add('fkAnimerFormation', null, [
                 'placeholder' => 'Choisir une formation - ville',
+                'attr' => ['class' => 'js-select2-formateur'],
                 'label' => 'Formation - Ville'
             ]);
 
