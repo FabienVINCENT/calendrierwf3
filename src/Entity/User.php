@@ -291,6 +291,11 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->getPseudo();
+        $competences = $this->getTalents();
+        $talentStr = '';
+        foreach ($competences as $talent) {
+            $talentStr .= $talent->getNom() . ' - ';
+        }
+        return $this->getPseudo() . ' : ' . substr($talentStr, 0, -3);
     }
 }

@@ -1,8 +1,7 @@
 $(function () { //documentReady jQuery
 
-
-
-
+    // Lance select2.js sur le champ formateur quand on est admin (recherche)
+    $('.js-select2-formateur').select2({ theme: "bootstrap" });
 
 
     // Close Navbar when clicked outside

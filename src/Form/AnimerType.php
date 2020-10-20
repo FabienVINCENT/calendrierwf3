@@ -41,14 +41,15 @@ class AnimerType extends AbstractType
         // Si role ADMIN alors on affiche la liste des user en ROLE_FORMATEUR
         if ($this->security->isGranted('ROLE_ADMIN')) {
             $builder->add('fkAnimerUser', EntityType::class, [
-                'placeholder' => 'Choisir un(e) formateur(rice)',
+                'placeholder' => 'Choisir un(e) formateur(trice)',
+                'attr' => ['class' => 'js-select2-formateur'],
+                // 'placeholder' => 'Choisir un(e) formateur(rice)',
                 'class' => User::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.roles LIKE :roles')
                         ->setParameter('roles', '%"' . 'ROLE_FORMATEUR' . '"%');
                 },
-                'choice_label' => 'pseudo',
                 'label' => 'Formateur'
 
             ]);
@@ -61,7 +62,6 @@ class AnimerType extends AbstractType
                         ->where('u.email = :email')
                         ->setParameter('email', $this->security->getUser()->getUsername());
                 },
-                'choice_label' => 'pseudo',
                 'label' => 'Formateur'
             ]);
         }
@@ -82,5 +82,11 @@ class AnimerType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Animer::class,
         ]);
+    }
+
+    // Evite d'avoir des trucs degueulasse dans le name des input
+    public function getBlockPrefix()
+    {
+        return '';
     }
 }
