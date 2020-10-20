@@ -23,12 +23,14 @@ class ApiCalendarController extends AbstractController
     		$start = clone $animer->getDate();
     		$end = clone $animer->getDate();
     		$typeJournee = $animer->getTypeJournee();
+    		$allDay= false;
     		
     		switch ($typeJournee) {
 
 	    		case '0':
 	    			$start->setTime(8,0);
 	    			$end->setTime(17,0);
+	    			$allDay= true;
 	    			break;
 
 				case '1':
@@ -47,7 +49,8 @@ class ApiCalendarController extends AbstractController
     	   		'start' => $start,
     	   		'end' => $end,
     	   		'title' => $animer->getFkAnimerFormation()->getNom().'/'.$animer->getFkAnimerFormation()->getLocalisation()->getVille(),
-    	   		'description' =>$animer->getFkAnimerUser()->getPseudo(),	
+    	   		'description' =>$animer->getFkAnimerUser()->getPseudo(),
+    	   		'allDay'=>$allDay,	
     	   	];
     	}
 

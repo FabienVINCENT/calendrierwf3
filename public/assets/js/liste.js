@@ -10,20 +10,15 @@ $(document).ready(function(){
 					let tab='';
 					users.forEach( (user)=> {
 						tab += '<tr>';
-						tab +='<td>'+user.lastname+'</td>';
-                        tab +='<td>'+user.firstname+'</td>';
+						tab +='<td class="p-2">'+user.lastname+'</td>';
+                        tab +='<td class="p-2">'+user.firstname+'</td>';
+                        tab +='<td class="p-2">'+'<a href="tel:'+user.phoneNumber+'">'+user.phoneNumber+'</a>'+'</td>';
                         tab += '</tr>';
-                        tab += '<tr>';
-                        tab +='<td>'+user.email+'</td>'
-                        tab += '</tr>';
-                        tab += '<tr>';;
-						tab +='<td>'+user.phoneNumber+'</td>';
-						tab += '</tr>';
 					});
 					$('.insert1').append(tab);
 				}
 			},'json');
-	}                         
+	}
 	listeFormateur();
 
 
@@ -37,8 +32,8 @@ $(document).ready(function(){
 					let line=''
 					formations.forEach( (formation)=> {
 						line += '<tr>';
-						line += '<td>'+formation.nom+' -'+'</td>';
-	                	line += '<td>'+formation.ville+'</td>';
+						line += '<td class="p-2">'+'<input type="checkbox" id="checkboxformation" class="form-check-input" id="exampleCheck1">'+formation.nom+' -'+'</td>';
+	                	line += '<td class="p-2">'+formation.ville+'</td>';
 						line += '</tr>';
 					});
 					$('.insert2').append(line);
@@ -46,5 +41,4 @@ $(document).ready(function(){
 			},'json');
 	}
 	listeFormations();
-
 })
