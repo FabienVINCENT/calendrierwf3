@@ -9,16 +9,9 @@ use App\Repository\UserRepository;
 
 class ApiUserController extends AbstractController
 {
-    /**
-     * @Route("/api/user", name="api_user")
-     */
-    public function index()
-    {
-      dd('coucou');
-    }
 
-     /**
-     * @Route("/user/listUser", name="listUser", methods={"GET","POST"}, format="json", options={"expose"=true})
+    /**
+     * @Route("/api/user/listFormateur", name="listUser", methods={"GET","POST"}, format="json", options={"expose"=true})
      */
     public function listUser(UserRepository $userRepository)
     {
@@ -31,5 +24,4 @@ class ApiUserController extends AbstractController
     {
         return $this->json($userRepository->getInfosUserById($user->getId()));
     }
-
 }

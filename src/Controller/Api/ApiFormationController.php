@@ -9,16 +9,9 @@ use App\Repository\FormationsRepository;
 
 class ApiFormationController extends AbstractController
 {
-    /**
-     * @Route("/api/formation", name="api_formation")
-     */
-    public function index()
-    {
-        dd('coucou');
-    }
 
     /**
-     * @Route("/formation/listFormation", name="listFormation", methods={"GET","POST"}, format="json")
+     * @Route("/api/formation/listFormation", name="listFormation", methods={"GET","POST"}, format="json")
      */
     public function listFormation(FormationsRepository $formationRepo)
     {
@@ -31,5 +24,22 @@ class ApiFormationController extends AbstractController
     public function getInfoFormation(Formations $formation, FormationsRepository $formationRepo)
     {
         return $this->json($formationRepo->getListFormationById($formation->getId()));
+    }
+
+    /**
+     * @Route("/api/formation/listnotended", name="listNotEndedFormation", methods={"GET","POST"}, format="json")
+     */
+    public function listNotEndedFormation(FormationsRepository $formationRepo)
+    {
+        $formations = $formationRepo->getFormationEvent();
+        $evenements = [];
+        foreach ($formations as $formation) {
+            $e['title'] = $formation->getNom();
+            $e['start'] = $formation->getDateDebut();
+            $e['end'] = $formation->getDateFin();
+
+            $evenements[] = $e;
+        }
+        return $this->json($evenements);
     }
 }

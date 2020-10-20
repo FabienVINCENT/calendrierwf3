@@ -19,22 +19,19 @@ class AnimerRepository extends ServiceEntityRepository
         parent::__construct($registry, Animer::class);
     }
 
-    // /**
-    //  * @return Animer[] Returns an array of Animer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Animer[] Returns an array of Animer objects
+     */
+
+    public function findByFormationId($idFormation)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.fkAnimerFormation = :id')
+            ->setParameter('id', $idFormation)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Animer
