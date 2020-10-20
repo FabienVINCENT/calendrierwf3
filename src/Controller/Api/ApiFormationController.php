@@ -18,7 +18,7 @@ class ApiFormationController extends AbstractController
     }
 
     /**
-     * @Route("/formation/listFormation", name="listFormation", methods={"GET"}, format="json")
+     * @Route("/formation/listFormation", name="listFormation", methods={"GET","POST"}, format="json")
      */
     public function listFormation(FormationsRepository $formationRepo)
     {

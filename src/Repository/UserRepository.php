@@ -41,7 +41,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getInfosUser()
     {
         return $this->createQueryBuilder('u')
-            ->select('u.id, u.email,u.roles, u.firstname')
+            ->select('u.id, u.email,u.roles, u.firstname, u.lastname, u.phoneNumber')
             ->getQuery()
             ->getResult();
     }
