@@ -48,7 +48,7 @@ body{
     height: 90vh;
 }
 
-.formations, .formateurs
+.formations h5, .formateurs h5
 {
     background-color: #343d8c!important;
     color: white; 
