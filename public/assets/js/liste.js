@@ -3,7 +3,7 @@ $(document).ready(function(){
 	//========================== Affichage Formateurs ===============================
 
 	function listeFormateur(){
-		$.post (url='/user/listUser',
+		$.post ('url:/user/listUser',
 			'action=listUser',
 			function(users) {
 				if(users.length > 0){
