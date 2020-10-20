@@ -18,7 +18,7 @@ class ApiUserController extends AbstractController
     }
 
      /**
-     * @Route("/user/listUser", name="listUser", methods={"GET"}, format="json")
+     * @Route("/user/listUser", name="listUser", methods={"GET","POST"}, format="json", options={"expose"=true})
      */
     public function listUser(UserRepository $userRepository)
     {
