@@ -36,14 +36,14 @@ window.onload = () =>
 
 	calendar.render()
 
-	$.get('/event_display', function (data) {
+	function reloadData() {
+		$.get('/event_display', function (data) {
 
-		data.forEach (evenement => {
-		calendar.addEvent(evenement)
+			data.forEach (evenement => {
+			calendar.addEvent(evenement)
 
-		console.log(evenement);
-
+			})
 		})
-	})
-	
+	}
+	reloadData();
 }
