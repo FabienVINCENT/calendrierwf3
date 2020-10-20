@@ -19,9 +19,8 @@ class FormationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Formations::class);
     }
 
-
     /**
-     * Function qui permet re recuperer la list des formations ainsi que l'endroit 
+     * Function qui permet de recuperer la liste des formations ainsi que l'endroit 
      * {
      *  "id": 1,
      *  "nom": "Devellopeur web",
