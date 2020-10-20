@@ -6,6 +6,7 @@ use App\Entity\Formations;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 
 class FormationsCrudController extends AbstractCrudController
 {
@@ -18,8 +19,10 @@ class FormationsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom'),
+            TextField::new('nom', 'Nom de la formation'),
             AssociationField::new('localisation'),
+            DateField::new('dateDebut', 'Date de début de la formation'),
+            DateField::new('dateFin', 'Date de fin de la formation'),
         ];
     }
 
