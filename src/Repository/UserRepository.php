@@ -36,8 +36,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-
-
     public function getInfosUser()
     {
         return $this->createQueryBuilder('u')
