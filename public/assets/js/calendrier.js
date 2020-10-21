@@ -109,4 +109,28 @@ $(document).ready(function () {
 	$("#date").datepicker();
 	$("#date").datepicker("option", "dateFormat", 'yy-mm-dd');
 
+
+
+	$('#js-valid-ajout').click((e) => {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '/addAnimer',
+			data: $('#modalAjoutDate').find('form').serialize(),
+			success: function (retour) {
+				if (retour === true) {
+					$('#modalAjoutDate').modal('hide');
+					reloadData();
+				} else {
+					console.log(retour);
+					$('.js-alert-form').each(function (div) {
+						$(this).remove();
+					})
+					$('#modalAjoutDate').find('.modal-body')
+						.prepend('<div class="alert alert-danger js-alert-form" role="alert">' + retour.error + '</div>')
+				}
+			}
+		})
+	})
+
 })
