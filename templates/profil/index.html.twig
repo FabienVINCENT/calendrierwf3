@@ -13,11 +13,7 @@
 			{{ formateurs.email }}</div>
 		<div>Téléphone:
 			{{ formateurs.phoneNumber }}</div>
-		<div>
-			<pre>
-            {{ dump(formateurs) }}
-        </pre>
-			Compétences:
+		<div>Compétences:
 			{% for talent in formateurs.talents %}
 				{{ talent.nom }}
 			{% endfor %}
@@ -29,6 +25,6 @@
 				{{ animer.fkAnimerFormation.nom }}
 			{% endfor %}
 		</div>
-		{# <a href="{{ path('profil_edit', {'id' : formateurs.id}) }}">Modifier</a> #}
+		<a href="{{ path('profil_edit', {'id' : formateurs.id}) }}">Modifier</a>
 	</div>
 {% endblock %}

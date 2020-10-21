@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProfilType extends AbstractType
 {
@@ -15,7 +16,8 @@ class ProfilType extends AbstractType
             ->add('email')
             ->add('lastname')
             ->add('firstname')
-            ->add('phoneNumber');
+            ->add('phoneNumber')
+            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
