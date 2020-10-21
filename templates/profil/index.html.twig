@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil
+{% endblock %}
+
+{% block body %}
+<div class="row border border-primary ml-1 mt-3 w-25">
+	<div class="mt-2 mb-2 ml-3">
+		<h1 class="h2"><u>Fiche Utilisateur</u></h1>
+		<div class="mt-1"><strong>Nom & Prénom:</strong>
+			{{formateurs.lastname}}
+			{{formateurs.firstname}}</div>
+		<div class="mt-1"><strong>Mail:</strong>
+			{{ formateurs.email }}</div>
+		<div class="mt-1"><strong>Téléphone:</strong>
+			{{ formateurs.phoneNumber }}</div>
+		<div class="mt-1"><strong>Compétences:</strong>
+			{% for talent in formateurs.talents %}
+				{{ talent.nom }}
+			{% endfor %}
+		</div>
+		<div class="mt-1"><strong>Formations en cours:</strong>
+			{% for animer in formateurs.animers %}
+				{{ animer.date|date("m/d/Y") }}
+				:
+				{{ animer.fkAnimerFormation.nom }}
+			{% endfor %}
+		</div>
+		<button type="button" class="btn btn-primary mt-2"><a href="{{ path('profil_edit', {'id' : formateurs.id}) }}" class="text-white">Modifier</a></button>
+	</div>
+</div>
+{% endblock %}

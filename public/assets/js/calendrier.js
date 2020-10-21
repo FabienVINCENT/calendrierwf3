@@ -9,11 +9,15 @@ $(document).ready(function () {
 		initialView: 'dayGridMonth',
 		locale: 'fr',
 		timeZone: 'Europe/Paris',
+		dayHeaderFormat: {
+			weekday: 'long',
+		},
 		headerToolbar: { // affichage des boutons (, -> pas despace)
 			start: 'prev,next today',
 			center: 'title',
 			end: 'dayGridMonth,timeGridWeek,list'
 		},
+		eventClick: afficheInfo,
 		// editable: true,
 		// eventResizableFromStart: true,
 		// selectable: true,
@@ -43,6 +47,47 @@ $(document).ready(function () {
 		}
 	}
 
+	function afficheInfo(info) {
+		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		const options2 = { timeZone: "UTC" };
+		let dateObjet = new Date(info.event.start);
+		let dateObjet2 = new Date(info.event.end);
+		let formateur = info.event.extendedProps.description;
+
+		console.log(info);
+
+		$('#modalAfficheInfo').modal('show');
+		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
+
+
+		//modale pour afficher les infos d'une formations se déroulant sur une journée 
+		if (info.event.end === null)
+		{
+			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'+'<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
+		}
+		//modale pour afficher les infos des formations sur la liste de vue générale 
+		else if ($('#listeFormation').is(':checked')) {
+
+		$('#modalAfficheDatesFormation').html('<table><tr>'
+			+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) +'</td>' + '</tr>'
+			+ '<tr>'
+			+ '<td class="p-2">'
+			+ 'Date de fin : '
+			+ dateObjet2.toLocaleDateString('fr-FR', options) +'</td>' + '</tr></table>'
+			+ '<button type="submit" id="js-ensavoirplus" data-formation="'+info.event.id+'" class="btn btn-info m-2">EN SAVOIR PLUS</button>');
+		}
+		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
+		else {
+
+			$('#modalAfficheDatesFormation').html('<table><tr>'+ '<td class="p-2">' + 'Date de début : '
+			+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
+			+ dateObjet.toLocaleTimeString('fr-FR',options2) +'</td>' + '</tr>' + '<tr>'+ '<td class="p-2">' + 'Date de fin : '
+			+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
+			+ dateObjet2.toLocaleTimeString('fr-FR',options2) +'</td>' 
+			+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
+
+		}
+	}
 
 	/**
 	 * Fonction qui reload les events
@@ -55,15 +100,19 @@ $(document).ready(function () {
 			e.remove();
 		});
 
-
 		// Si la checkbox list all est cochée, on recupère la liste des formations
 		if ($('#listeFormation').is(':checked')) {
 			// On récupère la liste des formation dont la date de fin est postérieur a aujourd'hui
 			$.get('/api/formation/listnotended', function (data) {
 				data.forEach(evenement => {
-					calendar.addEvent(evenement)
+
+					if ($('.checkboxformation[data-id="'+evenement.id+'"]').is(':checked')) {
+
+						calendar.addEvent(evenement)
+					}
 				})
 			});
+
 			// On change le mode de fonctionnement
 			modeFonctionnement = 'liste';
 		} else {
@@ -91,7 +140,7 @@ $(document).ready(function () {
 					modeFonctionnement = 'formation';
 				});
 			} else {
-				// Il y a plus qu'une formation alors on les affiches comme sur l'accueil
+				// Il y a plus qu'une formation alors on les affiche comme sur l'accueil
 
 				// On change le mode de fonctionnement
 				modeFonctionnement = 'liste';
@@ -102,11 +151,69 @@ $(document).ready(function () {
 	reloadData();
 
 	// Si on click sur une des checkbox, on reload les data
-	$('#listeFormation').change(reloadData);
+	$('#listeFormation').change(function(){
+
+		if ($('#listeFormation').is(':checked')) {
+
+			$('.checkboxformation').each((k, checkbox) => $(checkbox).prop("checked", true));
+
+		} else {
+
+			$('.checkboxformation').each((k, checkbox) => $(checkbox).prop("checked", false));
+		}
+
+		reloadData();
+
+	});
 	$('.insert2').change(reloadData);
 
 	// Gestion du datepicker
 	$("#date").datepicker();
 	$("#date").datepicker("option", "dateFormat", 'yy-mm-dd');
+
+	$('#js-valid-ajout').click((e) => {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '/addAnimer',
+			data: $('#modalAjoutDate').find('form').serialize(),
+			success: function (retour) {
+				$('.js-alert-form').each(function (div) {
+					$(this).remove();
+				})
+				if (retour === true) {
+					$('#modalAjoutDate').modal('hide');
+					reloadData();
+				} else {
+					$('#modalAjoutDate').find('.modal-body')
+						.prepend('<div class="alert alert-danger js-alert-form" role="alert">' + retour.error + '</div>')
+				}
+			}
+		})
+	})
+
+	$('#modalAfficheInfo').click((e) => {
+
+		if(e.target.nodeName!='BUTTON') {
+
+		} else {
+
+		$('input[type=checkbox]').each((k, checkbox) => {
+		
+			let idFormation = $('#js-ensavoirplus').data('formation');
+
+			if ($(checkbox).data('id') == idFormation) {
+
+				$(checkbox).prop("checked", true);
+			}
+			else{ $(checkbox).prop("checked", false);}
+		});
+
+	}
+	
+	$('#modalAfficheInfo').modal('hide');
+	reloadData();
+
+	});
 
 })

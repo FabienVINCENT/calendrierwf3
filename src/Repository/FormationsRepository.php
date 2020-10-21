@@ -37,6 +37,20 @@ class FormationsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Function qui permet de recuperer la liste des formations ainsi que la date de fin
+     */
+    public function getListFormationDate()
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.id, f.nom, fl.id as localisation_id, fl.ville')
+            ->leftJoin('f.localisation', 'fl')
+            ->andWhere('f.dateFin >= CURRENT_DATE()')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     public function getListFormationById($value)
     {
         return $this->createQueryBuilder('f')

@@ -24,23 +24,23 @@
 	</head>
 	<body>
 		<header>
-			<nav class="navbar navbar-expand-md navbar-royalblue unique-color-royalblue ">
-				<a class="navbar-brand" href="#">Navbar</a>
+			<nav class="navbar navbar-expand-md">
+				<a class="navbar-brand" href="{{path('home')}}">CalendrierWF3</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="{{path('home')}}">Home</a>
-						</li>
 						{% if app.user %}
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('admin')}}">EasyAdmin</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('profil_index')}}">Profil</a>
 							</li>
 						{% else %}
 							<li class="nav-item">

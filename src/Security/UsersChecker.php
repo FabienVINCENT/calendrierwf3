@@ -2,28 +2,32 @@
 
 namespace App\Security;
 
-use App\Entity\User;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use App\Entity\User as AppUser;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
-class UserChecker implements UserCheckerInterface
+class UsersChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user)
     {
-        if (!$user instanceof User) {
+        if (!$user instanceof AppUser) {
             return;
         }
 
-        if (!$user->isGranted('ROLE_FORMATEUR')) {
-            // the message passed to this exception is meant to be displayed to the user
-            throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
+        if (
+            !in_array('ROLE_ADMIN', $user->getRoles()) &&
+            !in_array('ROLE_FORMATEUR', $user->getRoles())
+        ) {
+            // return new Response("");
+            throw new CustomUserMessageAuthenticationException('Votre compte formateur n\'est pas activé. Veuillez contactez un administrateur.');
         }
     }
 
     public function checkPostAuth(UserInterface $user)
     {
-        if (!$user instanceof User) {
+        if (!$user instanceof AppUser) {
             return;
         }
     }

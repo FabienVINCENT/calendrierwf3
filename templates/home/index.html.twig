@@ -13,6 +13,9 @@
 
 {% block body %}
 
+	<div id="loadingDiv">
+		<img src="{{asset('assets/loading.gif')}}" alt="">
+	</div>
 	<div class="row">
 
 		<div id="formation" class="col-md-3 mt-3">
@@ -41,7 +44,7 @@
 
 	</div>
 
-	<!-- Modal -->
+	<!-- MODALE AJOUT -->
 	<div class="modal fade" id="modalAjoutDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -55,6 +58,7 @@
 				{{form_errors(form)}}
 				<div class="modal-body">
 
+					{{form_errors(form)}}
 					{{form_row(form.date)}}
 					{{form_row(form.typeJournee)}}
 					{{form_row(form.fkAnimerFormation)}}
@@ -63,9 +67,21 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-					<button type="submit" class="btn btn-primary">Sauvegarder</button>
+					<button type="button" id="js-valid-ajout" class="btn btn-primary">Sauvegarder</button>
 				</div>
 				{{form_end(form)}}
+			</div>
+		</div>
+	</div>
+
+	<!-- MODALE AFFICHE INFO -->
+	<div class="modal fade" id="modalAfficheInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAfficheFormation"></h5>
+				</div>
+				<div class="modal-body" id="modalAfficheDatesFormation"></div>
 			</div>
 		</div>
 	</div>

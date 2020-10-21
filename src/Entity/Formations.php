@@ -24,7 +24,7 @@ class Formations
     /**
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank (message = "Champ obligatoire")
-     * @Assert\Length(min = 5, max = 60,
+     * @Assert\Length(min = 4, max = 60,
      *      minMessage = "Veuillez entrer 5 caractère au minimum",
      *      maxMessage = "Veuillez entrer 60 caractère au maximum"
      * )
