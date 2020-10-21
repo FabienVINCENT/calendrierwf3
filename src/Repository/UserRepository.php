@@ -36,8 +36,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-
-
     public function getInfosUser()
     {
         return $this->createQueryBuilder('u')
@@ -47,6 +45,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+
     public function getInfosUserById(int $id)
     {
         return $this->createQueryBuilder('u')
@@ -56,6 +55,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+
     public function getInfosUserByIdTata(int $id)
     {
         return $this->createQueryBuilder('u')
@@ -64,6 +64,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

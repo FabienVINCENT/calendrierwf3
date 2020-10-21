@@ -20,7 +20,7 @@ class FormationsRepository extends ServiceEntityRepository
     }
 
     /**
-     * Function qui permet de recuperer la liste des formations ainsi que l'endroit 
+     * Function qui permet de recuperer la liste des formations ainsi que l'endroit
      * {
      *  "id": 1,
      *  "nom": "Devellopeur web",
@@ -36,6 +36,7 @@ class FormationsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
     public function getListFormationById($value)
     {
         return $this->createQueryBuilder('f')
@@ -56,6 +57,20 @@ class FormationsRepository extends ServiceEntityRepository
             // ->select('f.id, f.nom, fl.id as localisation_id, fl.ville,f.dateDebut, f.dateFin')
             ->leftJoin('f.localisation', 'fl')
             ->andWhere('f.dateFin >= CURRENT_DATE()')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Formations[]
+     */
+    public function getCurrentFormation()
+    {
+        return $this->createQueryBuilder('f')
+            //->select('f.id, f.nom, fl.id as localisation_id, fl.ville,f.dateDebut, f.dateFin')
+            //->leftJoin('f.localisation', 'fl')
+            ->Where('f.dateFin >= CURRENT_DATE()')
+            ->andWhere('f.dateDebut <= CURRENT_DATE()')
             ->getQuery()
             ->getResult();
     }
