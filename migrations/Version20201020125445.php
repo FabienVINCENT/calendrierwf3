@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201019174139 extends AbstractMigration
+final class Version20201020125445 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,7 +20,7 @@ final class Version20201019174139 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE animer (id INT AUTO_INCREMENT NOT NULL, fk_animer_formation_id INT NOT NULL, fk_animer_user_id INT DEFAULT NULL, date DATE NOT NULL, type_journee SMALLINT NOT NULL, INDEX IDX_F4C8DB78112A9EFF (fk_animer_formation_id), INDEX IDX_F4C8DB7830566CDF (fk_animer_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE animer (id INT AUTO_INCREMENT NOT NULL, fk_animer_formation_id INT NOT NULL, fk_animer_user_id INT NOT NULL, date DATE NOT NULL, type_journee SMALLINT NOT NULL, INDEX IDX_F4C8DB78112A9EFF (fk_animer_formation_id), INDEX IDX_F4C8DB7830566CDF (fk_animer_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE competence (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE endroit (id INT AUTO_INCREMENT NOT NULL, ville VARCHAR(60) NOT NULL, UNIQUE INDEX UNIQ_7B44825A43C3D9C3 (ville), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formations (id INT AUTO_INCREMENT NOT NULL, localisation_id INT NOT NULL, nom VARCHAR(60) NOT NULL, UNIQUE INDEX UNIQ_409021376C6E55B5 (nom), INDEX IDX_40902137C68BE09C (localisation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
