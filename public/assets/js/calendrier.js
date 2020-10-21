@@ -64,7 +64,7 @@ $(document).ready(function () {
 		if (info.event.end === null)
 		{
 			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'+'<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
-		} 
+		}
 		//modale pour afficher les infos des formations sur la liste de vue générale 
 		else if ($('#listeFormation').is(':checked')) {
 
@@ -74,8 +74,8 @@ $(document).ready(function () {
 			+ '<td class="p-2">'
 			+ 'Date de fin : '
 			+ dateObjet2.toLocaleDateString('fr-FR', options) +'</td>' + '</tr></table>'
-			+ '<button type="submit" class="btn btn-info">EN SAVOIR PLUS</button>');
-		} 
+			+ '<button type="submit" id="js-ensavoirplus" data-formation="'+info.event.id+'" class="btn btn-info m-2">EN SAVOIR PLUS</button>');
+		}
 		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
 		else {
 
@@ -167,8 +167,6 @@ $(document).ready(function () {
 	$("#date").datepicker();
 	$("#date").datepicker("option", "dateFormat", 'yy-mm-dd');
 
-
-
 	$('#js-valid-ajout').click((e) => {
 		e.preventDefault();
 		$.ajax({
@@ -189,5 +187,31 @@ $(document).ready(function () {
 			}
 		})
 	})
+
+	$('#modalAfficheInfo').click((e) => {
+
+		if(e.target.nodeName!='BUTTON') {
+
+			/*e.stopPropagation();*/
+
+		} else {
+
+		$('input[type=checkbox]').each((k, checkbox) => {
+		
+			let idFormation = $('#js-ensavoirplus').data('formation');
+
+			if ($(checkbox).data('id') == idFormation) {
+
+				$(checkbox).prop("checked", true);
+			}
+			else{ $(checkbox).prop("checked", false);}
+		});
+
+	}
+	
+	$('#modalAfficheInfo').modal('hide');
+	reloadData();
+
+	});
 
 })
