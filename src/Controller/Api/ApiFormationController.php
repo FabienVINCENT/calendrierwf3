@@ -22,6 +22,14 @@ class ApiFormationController extends AbstractController
         return $this->json($formationRepo->getListFormation());
     }
 
+     /**
+     * @Route("/api/formation/listFormationDate", name="listFormationDate", methods={"GET","POST"}, format="json")
+     */
+    public function listFormationDate(FormationsRepository $formationRepo)
+    {
+        return $this->json($formationRepo->getListFormationDate());
+    }
+
     /**
      * @Route("/formation/{id}", name="getFormation", methods={"GET"}, format="json")
      */
@@ -38,6 +46,7 @@ class ApiFormationController extends AbstractController
         $formations = $formationRepo->getFormationEvent();
         $evenements = [];
         foreach ($formations as $formation) {
+            $e['id'] = $formation->getId();
             $e['title'] = $formation->getNom();
             $e['start'] = $formation->getDateDebut();
             $e['end'] = $formation->getDateFin();
