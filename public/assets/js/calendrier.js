@@ -105,7 +105,11 @@ $(document).ready(function () {
 			// On récupère la liste des formation dont la date de fin est postérieur a aujourd'hui
 			$.get('/api/formation/listnotended', function (data) {
 				data.forEach(evenement => {
-					calendar.addEvent(evenement)
+
+					if ($('.checkboxformation[data-id="'+evenement.id+'"]').is(':checked')) {
+
+						calendar.addEvent(evenement)
+					}
 				})
 			});
 
@@ -191,8 +195,6 @@ $(document).ready(function () {
 	$('#modalAfficheInfo').click((e) => {
 
 		if(e.target.nodeName!='BUTTON') {
-
-			/*e.stopPropagation();*/
 
 		} else {
 
