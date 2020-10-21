@@ -22,7 +22,6 @@ class AnimerRepository extends ServiceEntityRepository
     /**
      * @return Animer[] Returns an array of Animer objects
      */
-
     public function findByFormationId($idFormation)
     {
         return $this->createQueryBuilder('a')
@@ -32,6 +31,17 @@ class AnimerRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Animer[] Returns an array of Animer objects
+     */
+    public function getByFormateurIdEvent($idUser)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.fkAnimerUser = :id')
+            ->setParameter('id', $idUser)
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Animer

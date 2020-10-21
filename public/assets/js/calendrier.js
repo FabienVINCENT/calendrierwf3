@@ -54,37 +54,34 @@ $(document).ready(function () {
 		let dateObjet2 = new Date(info.event.end);
 		let formateur = info.event.extendedProps.description;
 
-		console.log(info);
-
 		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
 
 
 		//modale pour afficher les infos d'une formations se déroulant sur une journée 
-		if (info.event.end === null)
-		{
-			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'+'<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
+		if (info.event.end === null) {
+			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>' + '<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
 		}
 		//modale pour afficher les infos des formations sur la liste de vue générale 
 		else if ($('#listeFormation').is(':checked')) {
 
-		$('#modalAfficheDatesFormation').html('<table><tr>'
-			+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) +'</td>' + '</tr>'
-			+ '<tr>'
-			+ '<td class="p-2">'
-			+ 'Date de fin : '
-			+ dateObjet2.toLocaleDateString('fr-FR', options) +'</td>' + '</tr></table>'
-			+ '<button type="submit" id="js-ensavoirplus" data-formation="'+info.event.id+'" class="btn btn-info m-2">EN SAVOIR PLUS</button>');
+			$('#modalAfficheDatesFormation').html('<table><tr>'
+				+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) + '</td>' + '</tr>'
+				+ '<tr>'
+				+ '<td class="p-2">'
+				+ 'Date de fin : '
+				+ dateObjet2.toLocaleDateString('fr-FR', options) + '</td>' + '</tr></table>'
+				+ '<button type="submit" id="js-ensavoirplus" data-formation="' + info.event.id + '" class="btn btn-info m-2">EN SAVOIR PLUS</button>');
 		}
 		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
 		else {
 
-			$('#modalAfficheDatesFormation').html('<table><tr>'+ '<td class="p-2">' + 'Date de début : '
-			+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
-			+ dateObjet.toLocaleTimeString('fr-FR',options2) +'</td>' + '</tr>' + '<tr>'+ '<td class="p-2">' + 'Date de fin : '
-			+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
-			+ dateObjet2.toLocaleTimeString('fr-FR',options2) +'</td>' 
-			+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
+			$('#modalAfficheDatesFormation').html('<table><tr>' + '<td class="p-2">' + 'Date de début : '
+				+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
+				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
+				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
+				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
+				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
 
 		}
 	}
@@ -106,7 +103,7 @@ $(document).ready(function () {
 			$.get('/api/formation/listnotended', function (data) {
 				data.forEach(evenement => {
 
-					if ($('.checkboxformation[data-id="'+evenement.id+'"]').is(':checked')) {
+					if ($('.checkboxformation[data-id="' + evenement.id + '"]').is(':checked')) {
 
 						calendar.addEvent(evenement)
 					}
@@ -151,7 +148,7 @@ $(document).ready(function () {
 	reloadData();
 
 	// Si on click sur une des checkbox, on reload les data
-	$('#listeFormation').change(function(){
+	$('#listeFormation').change(function () {
 
 		if ($('#listeFormation').is(':checked')) {
 
@@ -165,7 +162,7 @@ $(document).ready(function () {
 		reloadData();
 
 	});
-	$('.insert2').change(reloadData);
+	$('.listformation').change(reloadData);
 
 	// Gestion du datepicker
 	$("#date").datepicker();
@@ -175,7 +172,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$.ajax({
 			type: 'POST',
-			url: '/addAnimer',
+			url: '/api/addAnimer',
 			data: $('#modalAjoutDate').find('form').serialize(),
 			success: function (retour) {
 				$('.js-alert-form').each(function (div) {
@@ -194,25 +191,25 @@ $(document).ready(function () {
 
 	$('#modalAfficheInfo').click((e) => {
 
-		if(e.target.nodeName!='BUTTON') {
-
+		if (e.target.nodeName != 'BUTTON') {
+			e.preventDefault();
 		} else {
 
-		$('input[type=checkbox]').each((k, checkbox) => {
-		
-			let idFormation = $('#js-ensavoirplus').data('formation');
+			$('input[type=checkbox]').each((k, checkbox) => {
 
-			if ($(checkbox).data('id') == idFormation) {
+				let idFormation = $('#js-ensavoirplus').data('formation');
 
-				$(checkbox).prop("checked", true);
-			}
-			else{ $(checkbox).prop("checked", false);}
-		});
+				if ($(checkbox).data('id') == idFormation) {
 
-	}
-	
-	$('#modalAfficheInfo').modal('hide');
-	reloadData();
+					$(checkbox).prop("checked", true);
+				}
+				else { $(checkbox).prop("checked", false); }
+			});
+
+			$('#modalAfficheInfo').modal('hide');
+			reloadData();
+		}
+
 
 	});
 

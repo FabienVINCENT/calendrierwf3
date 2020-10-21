@@ -52,6 +52,11 @@ class Formations
      */
     private $dateFin;
 
+    /**
+     * @ORM\Column(type="string", length=7)
+     */
+    private $color;
+
     public function __construct()
     {
         $this->animers = new ArrayCollection();
@@ -142,6 +147,18 @@ class Formations
     public function setDateFin(\DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }

@@ -4,29 +4,49 @@
 {% endblock %}
 
 {% block body %}
-<div class="row border border-primary ml-1 mt-3 w-25">
-	<div class="mt-2 mb-2 ml-3">
-		<h1 class="h2"><u>Fiche Utilisateur</u></h1>
-		<div class="mt-1"><strong>Nom & Prénom:</strong>
-			{{formateurs.lastname}}
-			{{formateurs.firstname}}</div>
-		<div class="mt-1"><strong>Mail:</strong>
-			{{ formateurs.email }}</div>
-		<div class="mt-1"><strong>Téléphone:</strong>
-			{{ formateurs.phoneNumber }}</div>
-		<div class="mt-1"><strong>Compétences:</strong>
-			{% for talent in formateurs.talents %}
-				{{ talent.nom }}
-			{% endfor %}
+	<div class="row">
+		<div class="col-12">
+			<div class="card mt-4 shadow-sm">
+				<div class="card-header">
+					<h4 class="my-0 font-weight-normal text-center">
+						<u>Fiche Utilisateur</u>
+					</h4>
+				</div>
+				<div class="card-body row">
+					<div class="col-md-6">
+						<div class="mt-1">
+							<strong>Nom & Prénom:</strong>
+							{{formateurs.lastname}}
+							{{formateurs.firstname}}</div>
+						<div class="mt-1">
+							<strong>Mail:</strong>
+							{{ formateurs.email }}</div>
+						<div class="mt-1">
+							<strong>Téléphone:</strong>
+							{{ formateurs.phoneNumber }}</div>
+						<div class="mt-1">
+							<strong>Compétences:</strong>
+							{% for talent in formateurs.talents %}
+								{{ talent.nom }}
+							{% endfor %}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="mt-1">
+							<strong>Formations en cours:</strong>
+							<ul>
+								{% for animer in formateurs.animers %}
+									<li>{{ animer.date|date("m/d/Y") }}
+										:
+										{{ animer.fkAnimerFormation.nom }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					<a href="{{ path('profil_edit', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary">Modifier</a>
+					<a href="#" class="btn btn-lg btn-block btn-primary">Changer mot de passe</a>
+				</div>
+			</div>
 		</div>
-		<div class="mt-1"><strong>Formations en cours:</strong>
-			{% for animer in formateurs.animers %}
-				{{ animer.date|date("m/d/Y") }}
-				:
-				{{ animer.fkAnimerFormation.nom }}
-			{% endfor %}
-		</div>
-		<button type="button" class="btn btn-primary mt-2"><a href="{{ path('profil_edit', {'id' : formateurs.id}) }}" class="text-white">Modifier</a></button>
 	</div>
-</div>
 {% endblock %}

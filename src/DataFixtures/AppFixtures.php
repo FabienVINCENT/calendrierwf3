@@ -94,11 +94,12 @@ class AppFixtures extends Fixture
         }
         // Creation des formation
         $formations = ['Developpeur web', 'TSSR', 'Espagnol', 'Apprentissage du chant'];
-        $dateDebut = ['2020-01-15', '2020-02-15', '2020-03-15', '2020-04-15'];
-        $dateFin = ['2020-03-15', '2020-04-15', '2020-05-15', '2020-06-15'];
+        $dateDebut = ['2020-10-26', '2020-02-15', '2020-03-15', '2020-04-15'];
+        $dateFin = ['2020-12-15', '2020-04-15', '2020-11-15', '2020-10-22'];
         for ($i = 0; $i < 4; $i++) {
             $formation = new Formations();
             $formation->setNom($formations[$i]);
+            $formation->setColor($this->faker->hexcolor);
             $formation->setDateDebut(new \DateTime($dateDebut[$i]));
             $formation->setDateFin(new \DateTime($dateFin[$i]));
             $formation->setLocalisation($endroits[array_rand($endroits)]);

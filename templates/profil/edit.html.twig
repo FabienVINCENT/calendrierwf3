@@ -4,8 +4,29 @@
 {% endblock %}
 
 {% block body %}
-<div class="row ml-3 mt-3">
-	{{form_start(form)}}
-	{{form_end(form)}}
-</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="card mt-4 shadow-sm">
+				<div class="card-header">
+					<h4 class="my-0 font-weight-normal text-center">
+						<u>Modification profil</u>
+					</h4>
+				</div>
+				<div class="card-body row">
+					<div class="col-12">
+						{{form_start(form)}}
+						{{form_errors(form)}}
+
+						{{form_row(form.email)}}
+						{{form_row(form.lastname)}}
+						{{form_row(form.firstname)}}
+						{{form_row(form.phoneNumber)}}
+
+						<button type="submit" class="btn btn-lg btn-block btn-primary">Modifier</button>
+						{{form_end(form)}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

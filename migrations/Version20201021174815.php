@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201021085641 extends AbstractMigration
+final class Version20201021174815 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,7 @@ final class Version20201021085641 extends AbstractMigration
         $this->addSql('CREATE TABLE animer (id INT AUTO_INCREMENT NOT NULL, fk_animer_formation_id INT NOT NULL, fk_animer_user_id INT NOT NULL, date DATE NOT NULL, type_journee SMALLINT NOT NULL, INDEX IDX_F4C8DB78112A9EFF (fk_animer_formation_id), INDEX IDX_F4C8DB7830566CDF (fk_animer_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE competence (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE endroit (id INT AUTO_INCREMENT NOT NULL, ville VARCHAR(60) NOT NULL, UNIQUE INDEX UNIQ_7B44825A43C3D9C3 (ville), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE formations (id INT AUTO_INCREMENT NOT NULL, localisation_id INT NOT NULL, nom VARCHAR(60) NOT NULL, date_debut DATE NOT NULL, date_fin DATE NOT NULL, UNIQUE INDEX UNIQ_409021376C6E55B5 (nom), INDEX IDX_40902137C68BE09C (localisation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE formations (id INT AUTO_INCREMENT NOT NULL, localisation_id INT NOT NULL, nom VARCHAR(60) NOT NULL, date_debut DATE NOT NULL, date_fin DATE NOT NULL, color VARCHAR(7) NOT NULL, UNIQUE INDEX UNIQ_409021376C6E55B5 (nom), INDEX IDX_40902137C68BE09C (localisation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, lastname VARCHAR(50) NOT NULL, firstname VARCHAR(50) NOT NULL, phone_number VARCHAR(17) NOT NULL, pseudo VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user_competence (user_id INT NOT NULL, competence_id INT NOT NULL, INDEX IDX_33B3AE93A76ED395 (user_id), INDEX IDX_33B3AE9315761DAB (competence_id), PRIMARY KEY(user_id, competence_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE animer ADD CONSTRAINT FK_F4C8DB78112A9EFF FOREIGN KEY (fk_animer_formation_id) REFERENCES formations (id)');
