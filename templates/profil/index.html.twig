@@ -4,27 +4,29 @@
 {% endblock %}
 
 {% block body %}
-	<div class="mt-3 ml-3">
-		<h1>Fiche Utilisateur</h1>
-		<div>Nom & Prénom:
+<div class="row border border-primary my-3">
+	<div class="mt-2 mb-2 ml-3">
+		<h1 class="h2"><u>Fiche Utilisateur</u></h1>
+		<div class="mt-1"><strong>Nom & Prénom:</strong>
 			{{formateurs.lastname}}
 			{{formateurs.firstname}}</div>
-		<div>Mail:
+		<div class="mt-1"><strong>Mail:</strong>
 			{{ formateurs.email }}</div>
-		<div>Téléphone:
+		<div class="mt-1"><strong>Téléphone:</strong>
 			{{ formateurs.phoneNumber }}</div>
-		<div>Compétences:
+		<div class="mt-1"><strong>Compétences:</strong>
 			{% for talent in formateurs.talents %}
 				{{ talent.nom }}
 			{% endfor %}
 		</div>
-		<div>Formations en cours:
+		<div class="mt-1"><strong>Formations en cours:</strong>
 			{% for animer in formateurs.animers %}
 				{{ animer.date|date("m/d/Y") }}
 				:
 				{{ animer.fkAnimerFormation.nom }}
 			{% endfor %}
 		</div>
-		<a href="{{ path('profil_edit', {'id' : formateurs.id}) }}">Modifier</a>
+		<button type="button" class="btn btn-primary mt-2"><a href="{{ path('profil_edit', {'id' : formateurs.id}) }}" class="text-white">Modifier</a></button>
 	</div>
+</div>
 {% endblock %}
