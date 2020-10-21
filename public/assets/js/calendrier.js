@@ -9,11 +9,15 @@ $(document).ready(function () {
 		initialView: 'dayGridMonth',
 		locale: 'fr',
 		timeZone: 'Europe/Paris',
+		dayHeaderFormat: {
+			weekday: 'long',
+		},
 		headerToolbar: { // affichage des boutons (, -> pas despace)
 			start: 'prev,next today',
 			center: 'title',
 			end: 'dayGridMonth,timeGridWeek,list'
 		},
+		eventClick: afficheInfo,
 		// editable: true,
 		// eventResizableFromStart: true,
 		// selectable: true,
@@ -43,6 +47,40 @@ $(document).ready(function () {
 		}
 	}
 
+	function afficheInfo(info) {
+		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		const options2 = { timeZone: "UTC" };
+		let dateObjet = new Date(info.event.start);
+		let dateObjet2 = new Date(info.event.end);
+		let formateur = info.event.extendedProps.description;
+
+
+		$('#modalAfficheInfo').modal('show');
+		console.log(info);
+
+		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
+		if (info.event.end === null) {
+			$('#modalAfficheDatesFormation').html('<tr><td class="p-2">Formation sur la journée</td></tr>');
+
+		} else if ($('#listeFormation').is(':checked')) {
+
+			$('#modalAfficheDatesFormation').html('<tr>'
+				+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) + '</td>' + '</tr>'
+				+ '<tr>'
+				+ '<td class="p-2">'
+				+ 'Date de fin : '
+				+ dateObjet2.toLocaleDateString('fr-FR', options) + '</td>' + '</tr>');
+
+		} else {
+
+			$('#modalAfficheDatesFormation').html('<tr>' + '<td class="p-2">' + 'Date de début : '
+				+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
+				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
+				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
+				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
+				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr>');
+		}
+	}
 
 	/**
 	 * Fonction qui reload les events
@@ -54,7 +92,6 @@ $(document).ready(function () {
 		allEvent.forEach(e => {
 			e.remove();
 		});
-
 
 		// Si la checkbox list all est cochée, on recupère la liste des formations
 		if ($('#listeFormation').is(':checked')) {
