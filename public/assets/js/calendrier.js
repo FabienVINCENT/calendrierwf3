@@ -52,6 +52,8 @@ $(document).ready(function () {
 		const options2 = {timeZone: "UTC"};
 		let dateObjet = new Date(info.event.start);
 		let dateObjet2 = new Date(info.event.end);
+		let formateur = info.event.extendedProps.description;
+
 
 		$('#modalAfficheInfo').modal('show');
 		console.log(info);
@@ -61,10 +63,23 @@ $(document).ready(function () {
 		{
 			$('#modalAfficheDatesFormation').html('<tr><td class="p-2">Formation sur la journée</td></tr>');
 
-		} else {
+		} else if ($('#listeFormation').is(':checked')) {
 		
-		$('#modalAfficheDatesFormation').html('<tr>'+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) + ' de ' + dateObjet.toLocaleTimeString('fr-FR',options2) +'</td>' + '</tr>' + '<tr>'+ '<td class="p-2">' + 'Date de fin : ' + dateObjet2.toLocaleDateString('fr-FR', options) + ' à ' + dateObjet2.toLocaleTimeString('fr-FR',options2) +'</td>' + '</tr>');
+		$('#modalAfficheDatesFormation').html('<tr>'
+			+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) +'</td>' + '</tr>'
+			+ '<tr>'
+			+ '<td class="p-2">'
+			+ 'Date de fin : '
+			+ dateObjet2.toLocaleDateString('fr-FR', options) +'</td>' + '</tr>');
 
+		} else {
+
+			$('#modalAfficheDatesFormation').html('<tr>'+ '<td class="p-2">' + 'Date de début : '
+			+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
+			+ dateObjet.toLocaleTimeString('fr-FR',options2) +'</td>' + '</tr>' + '<tr>'+ '<td class="p-2">' + 'Date de fin : '
+			+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
+			+ dateObjet2.toLocaleTimeString('fr-FR',options2) +'</td>' 
+			+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr>');
 		}
 	}
 
