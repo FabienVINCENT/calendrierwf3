@@ -22,9 +22,15 @@ $(document).ready(function () {
 	//========================== Affichage Formations ===============================
 
 	function listeFormations() {
-		$.post('/api/formation/listFormation',
+
+		let today = new Date();
+		let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+		$.post('/api/formation/listFormationDate',
 			function (formations) {
+
 				if (formations.length > 0) {
+
 					let line = ''
 					formations.forEach((formation) => {
 						line += '<tr>';

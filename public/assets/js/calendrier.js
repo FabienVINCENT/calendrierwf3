@@ -54,31 +54,38 @@ $(document).ready(function () {
 		let dateObjet2 = new Date(info.event.end);
 		let formateur = info.event.extendedProps.description;
 
-
-		$('#modalAfficheInfo').modal('show');
 		console.log(info);
 
+		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
-		if (info.event.end === null) {
-			$('#modalAfficheDatesFormation').html('<tr><td class="p-2">Formation sur la journée</td></tr>');
 
-		} else if ($('#listeFormation').is(':checked')) {
 
-			$('#modalAfficheDatesFormation').html('<tr>'
-				+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) + '</td>' + '</tr>'
-				+ '<tr>'
-				+ '<td class="p-2">'
-				+ 'Date de fin : '
-				+ dateObjet2.toLocaleDateString('fr-FR', options) + '</td>' + '</tr>');
+		//modale pour afficher les infos d'une formations se déroulant sur une journée 
+		if (info.event.end === null)
+		{
+			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'+'<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
+		} 
+		//modale pour afficher les infos des formations sur la liste de vue générale 
+		else if ($('#listeFormation').is(':checked')) {
 
-		} else {
+		$('#modalAfficheDatesFormation').html('<table><tr>'
+			+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) +'</td>' + '</tr>'
+			+ '<tr>'
+			+ '<td class="p-2">'
+			+ 'Date de fin : '
+			+ dateObjet2.toLocaleDateString('fr-FR', options) +'</td>' + '</tr></table>'
+			+ '<button type="submit" class="btn btn-info">EN SAVOIR PLUS</button>');
+		} 
+		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
+		else {
 
-			$('#modalAfficheDatesFormation').html('<tr>' + '<td class="p-2">' + 'Date de début : '
-				+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
-				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
-				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
-				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
-				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr>');
+			$('#modalAfficheDatesFormation').html('<table><tr>'+ '<td class="p-2">' + 'Date de début : '
+			+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
+			+ dateObjet.toLocaleTimeString('fr-FR',options2) +'</td>' + '</tr>' + '<tr>'+ '<td class="p-2">' + 'Date de fin : '
+			+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
+			+ dateObjet2.toLocaleTimeString('fr-FR',options2) +'</td>' 
+			+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
+
 		}
 	}
 
@@ -101,6 +108,7 @@ $(document).ready(function () {
 					calendar.addEvent(evenement)
 				})
 			});
+
 			// On change le mode de fonctionnement
 			modeFonctionnement = 'liste';
 		} else {
@@ -128,7 +136,7 @@ $(document).ready(function () {
 					modeFonctionnement = 'formation';
 				});
 			} else {
-				// Il y a plus qu'une formation alors on les affiches comme sur l'accueil
+				// Il y a plus qu'une formation alors on les affiche comme sur l'accueil
 
 				// On change le mode de fonctionnement
 				modeFonctionnement = 'liste';
@@ -139,7 +147,20 @@ $(document).ready(function () {
 	reloadData();
 
 	// Si on click sur une des checkbox, on reload les data
-	$('#listeFormation').change(reloadData);
+	$('#listeFormation').change(function(){
+
+		if ($('#listeFormation').is(':checked')) {
+
+			$('.checkboxformation').each((k, checkbox) => $(checkbox).prop("checked", true));
+
+		} else {
+
+			$('.checkboxformation').each((k, checkbox) => $(checkbox).prop("checked", false));
+		}
+
+		reloadData();
+
+	});
 	$('.insert2').change(reloadData);
 
 	// Gestion du datepicker
