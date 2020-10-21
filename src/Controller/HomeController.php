@@ -30,6 +30,7 @@ class HomeController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('home');
         }
+        dump(in_array('ROLE_FORMATEUR', $this->getUser()->getRoles()));
 
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
