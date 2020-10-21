@@ -7,7 +7,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class FormationsCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
@@ -25,5 +29,4 @@ class FormationsCrudController extends AbstractCrudController
             DateField::new('dateFin', 'Date de fin de la formation'),
         ];
     }
-
 }

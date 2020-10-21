@@ -4,7 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\Competence;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class CompetenceCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

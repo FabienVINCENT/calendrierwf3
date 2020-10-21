@@ -11,6 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Animer
 {
+    const DEBUT_MATINNEE = 9;
+    const FIN_MATINNEE = 13;
+    const DEBUT_APRESMIDI = 14;
+    const FIN_APRESMIDI = 17;
 
     const JOURNEE = [0 => 'Journée complète', 1 => 'Matin', 2 => 'Après-midi'];
     /**
@@ -51,7 +55,7 @@ class Animer
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }

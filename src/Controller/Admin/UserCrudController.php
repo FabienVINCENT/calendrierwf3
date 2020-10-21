@@ -12,12 +12,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class UserCrudController extends AbstractCrudController
 {
 
     /**
-     * @var string
+     * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
 
@@ -26,7 +30,7 @@ class UserCrudController extends AbstractCrudController
      */
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
-       $this->passwordEncoder = $passwordEncoder;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public static function getEntityFqcn(): string
@@ -49,7 +53,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstname', 'Nom'),
             TextField::new('lastname', 'Prénom'),
             TextField::new('email', 'Email'),
-            TextField::new('password', 'Mot de passe')->setFormType(PasswordType::Class)->onlyOnForms(),
+            TextField::new('password', 'Mot de passe')->setFormType(PasswordType::class)->onlyOnForms(),
             TextField::new('phoneNumber', 'Numéro de téléphone'),
             ChoiceField::new('roles')->setChoices(['Admin' => 'ROLE_ADMIN', 'Formateur' => 'ROLE_FORMATEUR'])->allowMultipleChoices(),
             $talentField
@@ -57,21 +61,20 @@ class UserCrudController extends AbstractCrudController
     }
 
     // Je redéfinie la méthode persist de 'AbstractCrudController'
-    public function persistEntity(EntityManagerInterface $em,$user) : void
+    public function persistEntity(EntityManagerInterface $em, $user): void
     {
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
         $user->setPassword($encodedPassword);
 
-        parent::persistEntity($em,$user);
+        parent::persistEntity($em, $user);
     }
 
     // Je redéfinie la méthode update de 'AbstractCrudController'
-    public function updateEntity(EntityManagerInterface $em,$user) : void
+    public function updateEntity(EntityManagerInterface $em, $user): void
     {
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
         $user->setPassword($encodedPassword);
 
-        parent::updateEntity($em,$user);
+        parent::updateEntity($em, $user);
     }
-
 }

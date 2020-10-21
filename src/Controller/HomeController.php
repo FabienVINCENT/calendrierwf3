@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_FORMATEUR")
  */
 class HomeController extends AbstractController
 {

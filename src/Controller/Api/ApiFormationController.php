@@ -6,6 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Formations;
 use App\Repository\FormationsRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * @IsGranted("ROLE_FORMATEUR")
+ */
 
 class ApiFormationController extends AbstractController
 {

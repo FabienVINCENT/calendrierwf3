@@ -2,12 +2,17 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Animer;
 use App\Entity\Formations;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AnimerRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_FORMATEUR")
+ */
 class ApiCalendarController extends AbstractController
 {
 	/**
@@ -27,21 +32,18 @@ class ApiCalendarController extends AbstractController
 			$allDay = false;
 
 			switch ($typeJournee) {
-
 				case '0':
-					$start->setTime(8, 0);
-					$end->setTime(17, 0);
+					$start->setTime(Animer::DEBUT_MATINNEE, 0);
+					$end->setTime(Animer::FIN_APRESMIDI, 0);
 					$allDay = true;
 					break;
-
 				case '1':
-					$start->setTime(8, 0);
-					$end->setTime(12, 0);
+					$start->setTime(Animer::DEBUT_MATINNEE, 0);
+					$end->setTime(Animer::FIN_MATINNEE, 0);
 					break;
-
 				case '2':
-					$start->setTime(14, 0);
-					$end->setTime(17, 0);
+					$start->setTime(Animer::DEBUT_APRESMIDI, 0);
+					$end->setTime(Animer::FIN_APRESMIDI, 0);
 					break;
 			}
 
@@ -73,17 +75,17 @@ class ApiCalendarController extends AbstractController
 			$allDay = false;
 			switch ($typeJournee) {
 				case '0':
-					$start->setTime(8, 0);
-					$end->setTime(17, 0);
+					$start->setTime(Animer::DEBUT_MATINNEE, 0);
+					$end->setTime(Animer::FIN_APRESMIDI, 0);
 					$allDay = true;
 					break;
 				case '1':
-					$start->setTime(8, 0);
-					$end->setTime(12, 0);
+					$start->setTime(Animer::DEBUT_MATINNEE, 0);
+					$end->setTime(Animer::FIN_MATINNEE, 0);
 					break;
 				case '2':
-					$start->setTime(14, 0);
-					$end->setTime(17, 0);
+					$start->setTime(Animer::DEBUT_APRESMIDI, 0);
+					$end->setTime(Animer::FIN_APRESMIDI, 0);
 					break;
 			}
 

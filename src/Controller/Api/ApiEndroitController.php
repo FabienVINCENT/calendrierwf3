@@ -6,7 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Endroit;
 use App\Repository\EndroitRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_FORMATEUR")
+ */
 class ApiEndroitController extends AbstractController
 {
     /**
@@ -17,7 +21,7 @@ class ApiEndroitController extends AbstractController
         dd('coucou');
     }
 
-     /**
+    /**
      * @Route("/endroit/listVille", name="listVille", methods={"GET"}, format="json")
      */
     public function listVille(EndroitRepository $endroitRepo)
