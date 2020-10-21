@@ -29,6 +29,10 @@ body{
     background: #343d8c;
 }
 
+.navbar a {
+    color: #fbe56e;
+}
+
 .btn-info
 {
     color: #fff!important;
@@ -58,4 +62,22 @@ body{
 {
     padding-right: 0;
     margin-left: 0;
+}
+
+.fc .fc-button-primary
+{
+    background-color: #343d8c;
+    border-color: #fbe56e;
+}
+
+.fc-button-active
+{
+    transform: scale(1.01);
+    background-color: #343d8c!important;
+    color: #fbe56e!important; 
+}
+.fc .fc-button-primary:hover
+{
+    background-color: #262B44;
+    color: #fbe56e; 
 }
