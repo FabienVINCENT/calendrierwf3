@@ -55,6 +55,7 @@
 				{{form_errors(form)}}
 				<div class="modal-body">
 
+					{{form_errors(form)}}
 					{{form_row(form.date)}}
 					{{form_row(form.typeJournee)}}
 					{{form_row(form.fkAnimerFormation)}}
@@ -63,7 +64,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-					<button type="submit" class="btn btn-primary">Sauvegarder</button>
+					<button type="button" id="js-valid-ajout" class="btn btn-primary">Sauvegarder</button>
 				</div>
 				{{form_end(form)}}
 			</div>

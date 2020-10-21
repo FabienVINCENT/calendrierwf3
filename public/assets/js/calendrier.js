@@ -48,9 +48,8 @@ $(document).ready(function () {
 	}
 
 	function afficheInfo(info) {
-
-		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-		const options2 = {timeZone: "UTC"};
+		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		const options2 = { timeZone: "UTC" };
 		let dateObjet = new Date(info.event.start);
 		let dateObjet2 = new Date(info.event.end);
 		let formateur = info.event.extendedProps.description;
@@ -59,6 +58,7 @@ $(document).ready(function () {
 
 		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
+
 
 		//modale pour afficher les infos d'une formations se déroulant sur une journée 
 		if (info.event.end === null)
@@ -85,6 +85,7 @@ $(document).ready(function () {
 			+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 			+ dateObjet2.toLocaleTimeString('fr-FR',options2) +'</td>' 
 			+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
+
 		}
 	}
 
@@ -165,4 +166,28 @@ $(document).ready(function () {
 	// Gestion du datepicker
 	$("#date").datepicker();
 	$("#date").datepicker("option", "dateFormat", 'yy-mm-dd');
+
+
+
+	$('#js-valid-ajout').click((e) => {
+		e.preventDefault();
+		$.ajax({
+			type: 'POST',
+			url: '/addAnimer',
+			data: $('#modalAjoutDate').find('form').serialize(),
+			success: function (retour) {
+				$('.js-alert-form').each(function (div) {
+					$(this).remove();
+				})
+				if (retour === true) {
+					$('#modalAjoutDate').modal('hide');
+					reloadData();
+				} else {
+					$('#modalAjoutDate').find('.modal-body')
+						.prepend('<div class="alert alert-danger js-alert-form" role="alert">' + retour.error + '</div>')
+				}
+			}
+		})
+	})
+
 })

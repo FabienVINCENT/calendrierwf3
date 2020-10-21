@@ -30,11 +30,43 @@ class HomeController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('home');
         }
-        dump(in_array('ROLE_FORMATEUR', $this->getUser()->getRoles()));
 
         return $this->render('home/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
+    }
+    /**
+     * @Route("/addAnimer", name="addAnimer", methods={"POST"})
+     */
+    public function ajoutAnimer(Request $request, EntityManagerInterface $em)
+    {
+        $animer = new Animer();
+        $form = $this->createForm(AnimerType::class, $animer);
+        $form->handleRequest($request);
+
+
+
+        if ($form->isSubmitted()) {
+            if (null == $animer->getFkAnimerFormation()) {
+                return $this->json(['error' => 'La formation ne peut pas etre vide']);
+            }
+            if (null == $animer->getFkAnimerUser()) {
+                return $this->json(['error' => 'Le formateur ne peut pas etre vide']);
+            }
+            if (null == $animer->getDate()) {
+                return $this->json(['error' => 'Le formateur ne peut pas etre vide']);
+            }
+
+            try {
+                $em->persist($animer);
+                $em->flush();
+                return $this->json(true);
+            } catch (\Throwable $th) {
+                return $this->json(['error' => 'Une erreur est survenue...']);
+            }
+        }
+
+        return $this->json(['error' => 'Une erreur est survenue...']);
     }
 
     /**
