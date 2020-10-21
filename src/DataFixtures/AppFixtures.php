@@ -94,8 +94,8 @@ class AppFixtures extends Fixture
         }
         // Creation des formation
         $formations = ['Developpeur web', 'TSSR', 'Espagnol', 'Apprentissage du chant'];
-        $dateDebut = ['2020-10-26', '2020-02-15', '2020-03-15', '2020-04-15'];
-        $dateFin = ['2020-12-15', '2020-04-15', '2020-11-15', '2020-10-22'];
+        $dateDebut = ['2020-10-01', '2020-10-15', '2020-10-20', '2020-10-30'];
+        $dateFin = ['2020-10-25', '2020-11-15', '2020-11-20', '2020-11-30'];
         for ($i = 0; $i < 4; $i++) {
             $formation = new Formations();
             $formation->setNom($formations[$i]);
