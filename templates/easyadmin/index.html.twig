@@ -34,7 +34,7 @@
 					{% for animer in formation.animers %}
 
 						{% if animer.date|date('d M. Y') == "now"|date('d M. Y') %}
-							{{ (animer.fkAnimerUser.pseudo) }}
+							<a href="{{path('home_formateur',{id:animer.fkAnimerUser.id})}}">{{ (animer.fkAnimerUser.pseudo) }}</a>
 							{# {{ dump(animer.fkAnimerUser.pseudo) }} #}
 						{% else %}
 							<div class="alert alert-danger">
