@@ -81,3 +81,12 @@ body{
     background-color: #262B44;
     color: #fbe56e; 
 }
+
+
+#loadingDiv{
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    height: 100%;
+    background-color: red;
+}
