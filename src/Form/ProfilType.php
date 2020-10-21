@@ -13,14 +13,9 @@ class ProfilType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
-            ->add('password')
             ->add('lastname')
             ->add('firstname')
-            ->add('phoneNumber')
-            ->add('pseudo')
-            ->add('talents')
-        ;
+            ->add('phoneNumber');
     }
 
     public function configureOptions(OptionsResolver $resolver)
