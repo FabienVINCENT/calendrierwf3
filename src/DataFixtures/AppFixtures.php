@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
             ))
             ->setLastname('Admin')
             ->setFirstname('user')
-            ->setPhoneNumber('+33631121877')
+            ->setPhoneNumber('+33612345678')
             ->setRoles(['ROLE_ADMIN']);
         // On persiste l'admin
         $manager->persist($admin);

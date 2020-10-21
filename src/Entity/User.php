@@ -44,6 +44,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * @var string confirm password
      */
     private $confirmPassword;
@@ -63,7 +68,7 @@ class User implements UserInterface
      * @Assert\Regex(
      *     pattern="/^((\+)33)[1-9](\d{2}){4}$/",
      *     match=true,
-     *     message="Votre numero doit être sour forme : '+330612345678'"
+     *     message="Votre numero doit être sour forme : '+33612345678'"
      * )
      */
     private $phoneNumber;
@@ -148,6 +153,14 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getPlainPassword() {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword) {
+        $this->plainPassword = $plainPassword;
     }
 
     /**
@@ -298,4 +311,6 @@ class User implements UserInterface
         }
         return $this->getPseudo() . ' : ' . substr($talentStr, 0, -3);
     }
+
+
 }

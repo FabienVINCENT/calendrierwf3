@@ -14,6 +14,8 @@ use App\Entity\Endroit;
 use App\Entity\Formations;
 use App\Entity\User;
 
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -27,7 +29,16 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        //return parent::index();
+        // je récupère la pseudo d'un user
+        $admin = $this->getUser()->getPseudo();
+        // je récupère le tableau contenant toutes les formations en cours
+        $formations = $this->getDoctrine()->getRepository(Formations::class)->getCurrentFormation();
+
+        return $this->render('easyadmin/index.html.twig', [
+            'admin' => $admin,
+            'formations' => $formations,
+        ]);
     }
 
     public function configureDashboard(): Dashboard

@@ -145,4 +145,5 @@ class Formations
 
         return $this;
     }
+
 }
