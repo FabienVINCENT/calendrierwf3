@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @IsGranted("ROLE_FORMATEUR")
  */
-
 class ApiFormationController extends AbstractController
 {
 
