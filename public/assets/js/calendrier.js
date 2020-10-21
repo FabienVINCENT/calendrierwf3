@@ -155,14 +155,13 @@ $(document).ready(function () {
 			url: '/addAnimer',
 			data: $('#modalAjoutDate').find('form').serialize(),
 			success: function (retour) {
+				$('.js-alert-form').each(function (div) {
+					$(this).remove();
+				})
 				if (retour === true) {
 					$('#modalAjoutDate').modal('hide');
 					reloadData();
 				} else {
-					console.log(retour);
-					$('.js-alert-form').each(function (div) {
-						$(this).remove();
-					})
 					$('#modalAjoutDate').find('.modal-body')
 						.prepend('<div class="alert alert-danger js-alert-form" role="alert">' + retour.error + '</div>')
 				}
