@@ -1,6 +1,10 @@
 $(document).ready(function () {
+	const AFFICHE_JF = true;
+	let urlJF = 'https://etalab.github.io/jours-feries-france-data/json/metropole.json';
+	let modeFonctionnement = "";
 
-	let modeFonctionnement = ""
+	// Lance select2.js sur le champ formateur quand on est admin (recherche)
+	$('.js-select2-formateur').select2({ theme: "bootstrap" });
 
 	// On récupère le calendrier et on l'initialise
 	let calendarElt = document.querySelector("#calendrier")
@@ -39,6 +43,19 @@ $(document).ready(function () {
 	 */
 	function dateClickAdd(info) {
 		if (modeFonctionnement !== 'liste') {
+			// si une seul checkbox est cochée, alors on selectionne la formation dans le select
+			let checkedCheckbox = [];
+			$('.checkboxformation').each((k, checkbox) => {
+				if ($(checkbox).is(':checked')) {
+					checkedCheckbox.push($(checkbox).data('id'));
+				}
+			});
+			if ($(checkedCheckbox).length === 1) {
+				$('#fkAnimerFormation').val(checkedCheckbox[0]);
+				$('#fkAnimerFormation').trigger('change');
+			}
+
+
 			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 			let dateObjet = new Date(info.dateStr);
 			$('#modalAjoutDate').modal('show');
@@ -94,9 +111,9 @@ $(document).ready(function () {
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
 				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>')
 
-				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
-					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
-				};
+			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
+				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+			};
 		}
 	}
 
@@ -110,6 +127,29 @@ $(document).ready(function () {
 		allEvent.forEach(e => {
 			e.remove();
 		});
+
+		// On affiche les jours férié
+		if (AFFICHE_JF) {
+			$.get(urlJF, function (data) {
+				let events = [];
+
+				Object.keys(data).forEach(key => {
+					let date = new Date(key);
+					let now = new Date();
+					now.setFullYear(now.getFullYear() - 1);
+					if (date > now) {
+						let event = [];
+						event['title'] = 'Jour Férie';
+						event['description'] = data[key];
+						event['start'] = key;
+						event['backgroundColor'] = '#F25E57';
+						event['borderColor'] = '#F25E57';
+						calendar.addEvent(event);
+					}
+				});
+
+			});
+		}
 
 		// Si la checkbox list all est cochée, on recupère la liste des formations
 		if ($('#listeFormation').is(':checked')) {
@@ -226,7 +266,9 @@ $(document).ready(function () {
 	// Gestion du bouton "En savoir plus" de la modale
 	$('#modalAfficheInfo').click((e) => {
 
-		if (e.target.nodeName != 'BUTTON') { } else {
+		if (e.target.nodeName != 'BUTTON') {
+			e.preventDefault();
+		} else {
 
 			$('input[type=checkbox]').each((k, checkbox) => {
 
@@ -238,10 +280,11 @@ $(document).ready(function () {
 				}
 				else { $(checkbox).prop("checked", false); }
 			});
-		}
 
-		$('#modalAfficheInfo').modal('hide');
-		reloadData();
+
+			$('#modalAfficheInfo').modal('hide');
+			reloadData();
+		}
 	});
 
 	// Gestion du bouton de suppression d'un animer (crénaux formateur)
@@ -265,7 +308,8 @@ $(document).ready(function () {
 						}
 					}
 				})
-    	}
+			}
+
 		}
 	});
 })
