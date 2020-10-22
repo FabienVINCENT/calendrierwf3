@@ -17,16 +17,20 @@ class ChangePasswordType extends AbstractType
         $builder
             ->add('oldPassword', PasswordType::class, [
             'mapped' => false,
-            'label' => 'Ancien mot de passe'
+            'label' => 'Mot de passe actuel:',
+            'invalid_message' => 'Mot de passe incorrect'
             ])
 
             ->add('plainPassword', RepeatedType::class, [
-            'type' => PasswordType::class,])  
+            'type' => PasswordType::class,
+            'first_options'  => ['label' => 'Nouveau mot de passe:'],
+            'second_options' => ['label' => 'Confirmer le mot de passe:'],
+            'invalid_message' => 'Les deux champs doivent être identiques'])  ;
 
-            ->add('submit', SubmitType::class, [
-            'attr' => [
-            'class' => 'btn btn-primary btn-block w-25'],
-            'label' => 'Modifier']);               
+            // ->add('submit', SubmitType::class, [
+            // 'attr' => [
+            // 'class' => 'btn btn-primary btn-block w-25'],
+            // 'label' => 'Modifier']);               
     }
 
     public function configureOptions(OptionsResolver $resolver)
