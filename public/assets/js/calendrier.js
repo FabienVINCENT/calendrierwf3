@@ -15,7 +15,7 @@ $(document).ready(function () {
 		headerToolbar: { // affichage des boutons (, -> pas despace)
 			start: 'prev,next today',
 			center: 'title',
-			end: 'dayGridMonth,timeGridWeek,list'
+			end: 'dayGridMonth,timeGridWeek,listWeek'
 		},
 		eventClick: afficheInfo,
 		// editable: true,
@@ -47,6 +47,9 @@ $(document).ready(function () {
 		}
 	}
 
+	/**
+	 * Function de gestion des affichages d'infos
+	 */
 	function afficheInfo(info) {
 		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 		const options2 = { timeZone: "UTC" };
@@ -56,7 +59,6 @@ $(document).ready(function () {
 
 		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
-
 
 		//modale pour afficher les infos d'une formations se déroulant sur une journée 
 		if (info.event.end === null) {
@@ -75,14 +77,13 @@ $(document).ready(function () {
 		}
 		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
 		else {
-
+   
 			$('#modalAfficheDatesFormation').html('<table><tr>' + '<td class="p-2">' + 'Date de début : '
 				+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
 				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
 				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
 				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
-
 		}
 	}
 
@@ -147,8 +148,9 @@ $(document).ready(function () {
 
 	reloadData();
 
-	// Si on click sur une des checkbox, on reload les data
-	$('#listeFormation').change(function () {
+
+	// Gestion du cochage / décochage des checkboxs formations en fct du check général
+	$('#listeFormation').change(function(){
 
 		if ($('#listeFormation').is(':checked')) {
 
@@ -189,6 +191,7 @@ $(document).ready(function () {
 		})
 	})
 
+	// Gestion du bouton "En savoir plus" de la modale
 	$('#modalAfficheInfo').click((e) => {
 
 		if (e.target.nodeName != 'BUTTON') {
@@ -209,8 +212,5 @@ $(document).ready(function () {
 			$('#modalAfficheInfo').modal('hide');
 			reloadData();
 		}
-
-
 	});
-
 })
