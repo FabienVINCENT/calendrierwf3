@@ -12,15 +12,45 @@
 						<u>Modification profil</u>
 					</h4>
 				</div>
-				<div class="card-body row">
+				<div class="card-body  login__form row">
 					<div class="col-12">
 						{{form_start(form)}}
 						{{form_errors(form)}}
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-user"></i>
+								</span>
+							</div>
+							{{ form_widget(form.firstname) }}
+						</div>
 
-						{{form_row(form.email)}}
-						{{form_row(form.lastname)}}
-						{{form_row(form.firstname)}}
-						{{form_row(form.phoneNumber)}}
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-user"></i>
+								</span>
+							</div>
+							{{ form_widget(form.lastname) }}
+						</div>
+
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-envelope"></i>
+								</span>
+							</div>
+							{{ form_widget(form.email) }}
+						</div>
+
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fa fa-phone"></i>
+								</span>
+							</div>
+							{{ form_widget(form.phoneNumber) }}
+						</div>
 
 						<div class="row col-12">
 							<div class="col-md-6 mt-2">
