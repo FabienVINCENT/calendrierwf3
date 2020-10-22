@@ -65,6 +65,7 @@ $(document).ready(function () {
 	 * Function de gestion des affichages d'infos
 	 */
 	function afficheInfo(info) {
+		console.log(info);
 		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 		const options2 = { timeZone: "UTC" };
 		let dateObjet = new Date(info.event.start);
@@ -74,11 +75,16 @@ $(document).ready(function () {
 		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
 
-		//modale pour afficher les infos d'une formations se déroulant sur une journée 
+		//modale pour afficher les infos d'une formations se déroulant sur une journée
 		if (info.event.end === null) {
-			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>' + '<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
+			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'
+				+ '<tr><td class="p-2">Formateur : '
+				+ formateur + '</td></tr></table>')
+				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
+					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+				};
 		}
-		//modale pour afficher les infos des formations sur la liste de vue générale 
+		//modale pour afficher les infos des formations sur la liste de vue générale
 		else if ($('#listeFormation').is(':checked')) {
 
 			$('#modalAfficheDatesFormation').html('<table><tr>'
@@ -97,8 +103,13 @@ $(document).ready(function () {
 				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
 				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
-				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
+				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>')
+				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
+					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+				};
+
 		}
+
 	}
 
 	/**
@@ -159,7 +170,7 @@ $(document).ready(function () {
 				}
 			});
 
-			// Si la liste est 
+			// Si la liste est
 			if (checkedCheckbox.length === 0) {
 				// Pas de checkbox cochées, on fait rien
 				// On change le mode de fonctionnement
@@ -250,4 +261,31 @@ $(document).ready(function () {
 			reloadData();
 		}
 	});
+
+	// Gestion du bouton de suppression d'un animer (crénaux formateur)
+	$('#modalAfficheInfo').click((e) => {
+		e.preventDefault();
+		console.log(e.target);
+		if (e.target.nodeName == 'A') {
+			let idAnimer = $(e.target).data('animer');
+
+			// je demande confirmation avant de décencher la méthode ajax
+			if (window.confirm("Etes vous sur de vouloir supprimer ce crénaux?")) {
+				$.ajax({
+					type: 'GET',
+					url: '/api/deleteAnimer/' + idAnimer,
+					success: function (retour) {
+						if(retour){
+							$('#modalAfficheInfo').modal('hide');
+							reloadData();
+						} else {
+							alert('Probleme de suppression');
+						}
+					}
+				})
+    	}
+
+		}
+	});
+
 })
