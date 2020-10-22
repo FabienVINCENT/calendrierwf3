@@ -77,8 +77,10 @@ class ApiController extends AbstractController
                 'end' => $end,
                 'title' => $animer->getFkAnimerFormation()->getNom() . '/' . $animer->getFkAnimerFormation()->getLocalisation()->getVille(),
                 'description' => $animer->getFkAnimerUser()->getPseudo(),
+                'idFormateur' => $animer->getFkAnimerUser()->getId(),
                 'allDay' => $allDay,
                 'backgroundColor' => $bgColor,
+                'borderColor' => $bgColor,
             ];
         }
         return $this->json($data);
@@ -170,4 +172,21 @@ class ApiController extends AbstractController
         }
         return $this->json($data);
     }
+
+    /**
+     * @Route("deleteAnimer/{id}", name="deleteAnimer", methods={"GET"})
+     */
+    public function deleteAnimer(EntityManagerInterface $em, Animer $animer)
+    {
+        try{
+            $em->remove($animer);
+            $em->flush();
+            return $this->json(true);
+
+        } catch (\Exception $e) {
+            return $this->json(false);
+        }
+
+    }
+
 }
