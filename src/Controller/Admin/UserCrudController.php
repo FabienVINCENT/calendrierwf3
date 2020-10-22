@@ -60,6 +60,7 @@ class UserCrudController extends AbstractCrudController
         return [
             TextField::new('firstname', 'Nom'),
             TextField::new('lastname', 'Prénom'),
+            TextField::new('pseudo', 'Pseudo'),
             TextField::new('email', 'Email'),
             $plainPassword,
             TextField::new('phoneNumber', 'Numéro de téléphone'),
@@ -67,6 +68,14 @@ class UserCrudController extends AbstractCrudController
             $talentField
         ];
     }
+
+    // fonction pour changer le titre de la page
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+        ->setPageTitle('index', 'Gestion des utilisateurs');
+    }
+
 
     // Je redéfinie la méthode persist de 'AbstractCrudController'
     public function persistEntity(EntityManagerInterface $em, $user): void

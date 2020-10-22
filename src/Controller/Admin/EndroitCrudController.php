@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Endroit;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -16,14 +18,19 @@ class EndroitCrudController extends AbstractCrudController
         return Endroit::class;
     }
 
-    /*
+    // fonction pour changer le titre de la page
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+        ->setPageTitle('index', 'Gestion des endroits');
+    }
+
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('ville', 'Lieux de formation'),
         ];
     }
-    */
+
 }
