@@ -15,25 +15,35 @@
 				<div class="card-body row">
 					<div class="col-md-6">
 						<div class="mt-1">
-							<strong>Nom & Prénom:</strong>
+							<strong>
+								<u>Nom & Prénom:</u>
+							</strong>
 							{{formateurs.lastname}}
 							{{formateurs.firstname}}</div>
 						<div class="mt-1">
-							<strong>Mail:</strong>
+							<strong>
+								<u>Mail:</u>
+							</strong>
 							{{ formateurs.email }}</div>
 						<div class="mt-1">
-							<strong>Téléphone:</strong>
+							<strong>
+								<u>Téléphone:</u>
+							</strong>
 							{{ formateurs.phoneNumber }}</div>
 						<div class="mt-1">
-							<strong>Compétences:</strong>
+							<strong>
+								<u>Compétences:</u>
+							</strong>
 							{% for talent in formateurs.talents %}
 								{{ talent.nom }}
 							{% endfor %}
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="mt-1">
-							<strong>Formations en cours:</strong>
+						<div class="mt-3 mt-md-0">
+							<h4 class="my-0 font-weight-normal text-center">
+								<u>Formations en cours:</u>
+							</h4>
 							<ul>
 								{% for animer in formateurs.animers %}
 									<li>{{ animer.date|date("m/d/Y") }}
@@ -43,9 +53,13 @@
 							</ul>
 						</div>
 					</div>
-					<div class="d-flex w-100 justify-content-center mt-3">
-						<a href="{{ path('profil_edit', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary mt-2 w-25 mr-3">Modifier</a>
-						<a href="{{ path('profil_reset', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary w-25 ml-3">Changer mot de passe</a>
+					<div class="row col-12">
+						<div class="col-md-6 mt-2">
+							<a href="{{ path('profil_edit', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary">Modifier</a>
+						</div>
+						<div class="col-md-6 mt-2">
+							<a href="{{ path('profil_reset', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary">Changer mot de passe</a>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -22,9 +22,13 @@
 						{{form_row(form.firstname)}}
 						{{form_row(form.phoneNumber)}}
 
-						<div class="d-flex w-100 justify-content-center pt-3">
-							<button type="submit" class="btn btn-lg btn-block btn-primary w-25 mt-2 mr-3">Modifier</button>
-							<a href="{{ path('profil_index', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary w-25 ml-3">Retour</a>
+						<div class="row col-12">
+							<div class="col-md-6 mt-2">
+								<button type="submit" class="btn btn-lg btn-block btn-primary">Modifier</button>
+							</div>
+							<div class="col-md-6 mt-2">
+								<a href="{{ path('profil_index', {'id' : formateurs.id}) }}" class="btn btn-lg btn-block btn-primary">Retour</a>
+							</div>
 						</div>
 
 						{{form_end(form)}}
