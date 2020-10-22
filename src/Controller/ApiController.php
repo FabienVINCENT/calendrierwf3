@@ -132,6 +132,7 @@ class ApiController extends AbstractController
     }
     /**
      * @Route("formateur/listAnimer/{id}", name="listAnimer", methods={"GET"})
+     * recupération planning formateurs
      */
     public function listAnimer(User $user, UserRepository $repo)
     {
@@ -185,6 +186,27 @@ class ApiController extends AbstractController
             return $this->json(true);
         } catch (\Exception $e) {
             return $this->json(false);
+        }
+    }
+
+    /**
+     * @Route("editAnimer/{id}", name="deleteAnimer", methods={"POST"})
+     * Gestion edit drag&drop
+     */
+    public function editAnimer(EntityManagerInterface $em, Animer $animer, Request $request)
+    {
+        try {
+            $dateStr = json_decode($request->getContent());
+            $date =  new \DateTime($dateStr);
+            $animer->setDate($date);
+
+            $em->persist($animer);
+            $em->flush();
+
+
+            return $this->json(true);
+        } catch (\Exception $e) {
+            return $this->json($e);
         }
     }
 }

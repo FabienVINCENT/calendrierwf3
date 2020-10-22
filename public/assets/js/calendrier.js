@@ -105,7 +105,6 @@ $(document).ready(function () {
 	 * Fonction qui reload les events
 	 */
 	function reloadData() {
-		alert('toto')
 		// calendar.removeEvents();
 		// $('#calendar').fullCalendar('removeEventSources');
 		let allEvent = calendar.getEvents();
@@ -162,6 +161,28 @@ $(document).ready(function () {
 	}
 
 	reloadData();
+
+
+	/**
+	 * Gestion du drag & drop
+	 */
+	calendar.on('eventChange', (e) => {
+		let id = e.oldEvent.id;
+		let newDate = e.event.startStr;
+		console.log(id, newDate);
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(newDate),
+			url: '/api/editAnimer/' + id,
+			success: function (retour) {
+				console.log(retour)
+			}
+		})
+
+
+	});
+
 
 	// Gestion du cochage / décochage des checkboxs formations en fct du check général
 	$('#listeFormation').change(function () {
