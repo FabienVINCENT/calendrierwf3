@@ -310,7 +310,7 @@ $(document).ready(function () {
 			let idAnimer = $(e.target).data('animer');
 
 			// je demande confirmation avant de décencher la méthode ajax
-			if (window.confirm("Etes vous sur de vouloir supprimer ce crénaux?")) {
+			if (window.confirm("Etes-vous sûr de vouloir supprimer ce créneau?")) {
 				$.ajax({
 					type: 'GET',
 					url: '/api/deleteAnimer/' + idAnimer,

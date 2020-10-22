@@ -161,7 +161,7 @@ class ApiController extends AbstractController
             $dateSasie = $animer->getDate();
             if ($dateDebut > $dateSasie) {
                 return $this->json(['error' => 'La date de début est postérieure à la date choisie.<br>
-                La formation ' . $animer->getFkAnimerFormation()->getNom() . ' commence le ' . $dateDebut->format('d/m/Y') . ' et fini le ' . $dateFin->format('d/m/Y')]);
+                La formation ' . $animer->getFkAnimerFormation()->getNom() . ' commence le ' . $dateDebut->format('d/m/Y') . ' et finit le ' . $dateFin->format('d/m/Y')]);
             }
             if ($dateFin < $dateSasie) {
                 return $this->json(['error' => 'La date de fin est antérieure à la date choisie.']);
