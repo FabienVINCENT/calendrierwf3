@@ -96,9 +96,7 @@ $(document).ready(function () {
 				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
 					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
 				};
-
 		}
-
 	}
 
 	/**
@@ -246,9 +244,7 @@ $(document).ready(function () {
 						}
 					}
 				})
-    	}
-
+    		}
 		}
 	});
-
 })
