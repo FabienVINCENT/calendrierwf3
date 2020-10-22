@@ -3,6 +3,9 @@ $(document).ready(function () {
 	let urlJF = 'https://etalab.github.io/jours-feries-france-data/json/metropole.json';
 	let modeFonctionnement = "";
 
+	// Lance select2.js sur le champ formateur quand on est admin (recherche)
+	$('.js-select2-formateur').select2({ theme: "bootstrap" });
+
 	// On récupère le calendrier et on l'initialise
 	let calendarElt = document.querySelector("#calendrier")
 	let calendar = new FullCalendar.Calendar(calendarElt, {

@@ -1,8 +1,16 @@
 $(function () { //documentReady jQuery
 
-    // Lance select2.js sur le champ formateur quand on est admin (recherche)
-    $('.js-select2-formateur').select2({ theme: "bootstrap" });
 
+    // Fonction qui affiche/cache les champs password
+    $('.js-hidepassword').click(() => {
+        $('.js-inputPassword').each((k, input) => {
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        })
+    });
 
     let $loading = $('#loadingDiv').hide();
     $(document)
