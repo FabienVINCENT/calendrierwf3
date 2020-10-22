@@ -1,6 +1,10 @@
 $(document).ready(function () {
+	const AFFICHE_JF = true;
+	let urlJF = 'https://etalab.github.io/jours-feries-france-data/json/metropole.json';
+	let modeFonctionnement = "";
 
-	let modeFonctionnement = ""
+	// Lance select2.js sur le champ formateur quand on est admin (recherche)
+	$('.js-select2-formateur').select2({ theme: "bootstrap" });
 
 	// On récupère le calendrier et on l'initialise
 	let calendarElt = document.querySelector("#calendrier")
@@ -39,6 +43,19 @@ $(document).ready(function () {
 	 */
 	function dateClickAdd(info) {
 		if (modeFonctionnement !== 'liste') {
+			// si une seul checkbox est cochée, alors on selectionne la formation dans le select
+			let checkedCheckbox = [];
+			$('.checkboxformation').each((k, checkbox) => {
+				if ($(checkbox).is(':checked')) {
+					checkedCheckbox.push($(checkbox).data('id'));
+				}
+			});
+			if ($(checkedCheckbox).length === 1) {
+				$('#fkAnimerFormation').val(checkedCheckbox[0]);
+				$('#fkAnimerFormation').trigger('change');
+			}
+
+
 			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 			let dateObjet = new Date(info.dateStr);
 			$('#modalAjoutDate').modal('show');
@@ -51,20 +68,29 @@ $(document).ready(function () {
 	 * Function de gestion des affichages d'infos
 	 */
 	function afficheInfo(info) {
+		console.log(info);
 		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 		const options2 = { timeZone: "UTC" };
 		let dateObjet = new Date(info.event.start);
 		let dateObjet2 = new Date(info.event.end);
 		let formateur = info.event.extendedProps.description;
 
+		console.log(info);
+
 		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
 
-		//modale pour afficher les infos d'une formations se déroulant sur une journée 
+
+		//modale pour afficher les infos d'une formations se déroulant sur une journée
 		if (info.event.end === null) {
-			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>' + '<tr><td class="p-2">Formateur : ' + formateur + '</td></tr></table>');
+			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'
+				+ '<tr><td class="p-2">Formateur : '
+				+ formateur + '</td></tr></table>')
+			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
+				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+			};
 		}
-		//modale pour afficher les infos des formations sur la liste de vue générale 
+		//modale pour afficher les infos des formations sur la liste de vue générale
 		else if ($('#listeFormation').is(':checked')) {
 
 			$('#modalAfficheDatesFormation').html('<table><tr>'
@@ -77,13 +103,17 @@ $(document).ready(function () {
 		}
 		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
 		else {
-   
+
 			$('#modalAfficheDatesFormation').html('<table><tr>' + '<td class="p-2">' + 'Date de début : '
 				+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
 				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
 				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
-				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>');
+				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>')
+
+			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
+				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+			};
 		}
 	}
 
@@ -97,6 +127,29 @@ $(document).ready(function () {
 		allEvent.forEach(e => {
 			e.remove();
 		});
+
+		// On affiche les jours férié
+		if (AFFICHE_JF) {
+			$.get(urlJF, function (data) {
+				let events = [];
+
+				Object.keys(data).forEach(key => {
+					let date = new Date(key);
+					let now = new Date();
+					now.setFullYear(now.getFullYear() - 1);
+					if (date > now) {
+						let event = [];
+						event['title'] = 'Jour Férie';
+						event['description'] = data[key];
+						event['start'] = key;
+						event['backgroundColor'] = '#F25E57';
+						event['borderColor'] = '#F25E57';
+						calendar.addEvent(event);
+					}
+				});
+
+			});
+		}
 
 		// Si la checkbox list all est cochée, on recupère la liste des formations
 		if ($('#listeFormation').is(':checked')) {
@@ -122,7 +175,7 @@ $(document).ready(function () {
 				}
 			});
 
-			// Si la liste est 
+			// Si la liste est
 			if (checkedCheckbox.length === 0) {
 				// Pas de checkbox cochées, on fait rien
 				// On change le mode de fonctionnement
@@ -149,8 +202,27 @@ $(document).ready(function () {
 	reloadData();
 
 
+	/**
+	 * Gestion du drag & drop
+	 */
+	calendar.on('eventChange', (e) => {
+		let id = e.oldEvent.id;
+		let newDate = e.event.startStr;
+		console.log(id, newDate);
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(newDate),
+			url: '/api/editAnimer/' + id,
+			success: function (retour) {
+				console.log(retour)
+			}
+		})
+	});
+
+
 	// Gestion du cochage / décochage des checkboxs formations en fct du check général
-	$('#listeFormation').change(function(){
+	$('#listeFormation').change(function () {
 
 		if ($('#listeFormation').is(':checked')) {
 
@@ -174,7 +246,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$.ajax({
 			type: 'POST',
-			url: '/api/addAnimer',
+			url: '/addAnimer',
 			data: $('#modalAjoutDate').find('form').serialize(),
 			success: function (retour) {
 				$('.js-alert-form').each(function (div) {
@@ -209,8 +281,35 @@ $(document).ready(function () {
 				else { $(checkbox).prop("checked", false); }
 			});
 
+
 			$('#modalAfficheInfo').modal('hide');
 			reloadData();
+		}
+	});
+
+	// Gestion du bouton de suppression d'un animer (crénaux formateur)
+	$('#modalAfficheInfo').click((e) => {
+		e.preventDefault();
+		console.log(e.target);
+		if (e.target.nodeName == 'A') {
+			let idAnimer = $(e.target).data('animer');
+
+			// je demande confirmation avant de décencher la méthode ajax
+			if (window.confirm("Etes vous sur de vouloir supprimer ce crénaux?")) {
+				$.ajax({
+					type: 'GET',
+					url: '/api/deleteAnimer/' + idAnimer,
+					success: function (retour) {
+						if (retour) {
+							$('#modalAfficheInfo').modal('hide');
+							reloadData();
+						} else {
+							alert('Probleme de suppression');
+						}
+					}
+				})
+			}
+
 		}
 	});
 })

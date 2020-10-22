@@ -8,8 +8,15 @@ body {
     border: 1px solid #fbe56e !important;
     border-radius: 4px 0 0 4px;
 }
+.login__form .input-group-append {
+    color: #fff !important;
+    background-color: #fbe56e !important;
+    border: 1px solid #fbe56e !important;
+    border-radius: 0 4px 4px 0;
+}
 
-.input-group-prepend .input-group-text {
+.input-group-prepend .input-group-text,
+.input-group-append .input-group-text {
     color: #343d8c;
     background-color: #fbe56e !important;
     border: 1px solid #fbe56e !important;

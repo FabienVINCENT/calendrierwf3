@@ -23,7 +23,9 @@
 					du
 					{{ formation.dateDebut|date('d M. Y') }}
 					au
-					{{ formation.dateFin|date('d M. Y') }}</li>
+					{{ formation.dateFin|date('d M. Y') }}
+				</li>
+
 				<li class="list-group-item">
 					<u>Ville:</u>
 					{{formation.localisation.ville}}
@@ -31,20 +33,45 @@
 
 				<li class="list-group-item">
 					<u>Formateur:</u>
+
+					{# j'initialise une variable comme n'ayant pas de formateur par défaut #}
+					{% set noFormateur = true %}
+
 					{% for animer in formation.animers %}
 
 						{% if animer.date|date('d M. Y') == "now"|date('d M. Y') %}
-							<a href="{{path('home_formateur',{id:animer.fkAnimerUser.id})}}">{{ (animer.fkAnimerUser.pseudo) }}</a>
-							{# {{ dump(animer.fkAnimerUser.pseudo) }} #}
-						{% else %}
-							<div class="alert alert-danger">
-								<i class="fas fa-hand-paper">
-									!!! Pas de formateur présent !!!
-								</i>
-							</div>
+
+							<a href="{{path('home_formateur',{id:animer.fkAnimerUser.id})}}">
+								<b>{{animer.fkAnimerUser.pseudo}}
+
+									{# je test si j'ai un formateur le matin ou l'après-midi #}
+									{% if animer.typeJournee == 1 %}
+										(matin)
+									{% elseif animer.typeJournee == 2 %}
+									(après-midi)
+									{% endif %}
+
+								</b>
+							</a>
+
+							{# la variable passe à false #}
+							{% set noFormateur = false %}
+
 						{% endif %}
 
 					{% endfor %}
+
+					{# si je n'ai pas de formateur j'affiche une alerte #}
+					{% if noFormateur %}
+
+            <div class="alert alert-danger">
+              <i class="fas fa-hand-paper">
+                !!! Pas de formateur présent !!!
+              </i>
+            </div>
+
+					{% endif %}
+
 				</li>
 
 			</ul>
@@ -77,19 +104,44 @@
 
 				<li class="list-group-item">
 					<u>Formateur:</u>
+
+					{# j'initialise une variable comme n'ayant pas de formateur par défaut #}
+					{% set noFormateur = true %}
+
 					{% for animer in formation.animers %}
 
 						{% if animer.date|date('d M. Y') == "now"|date_modify("+1 day")|date("d M. Y") %}
-							{{ (animer.fkAnimerUser.pseudo) }}
-						{% else %}
-							<div class="alert alert-danger">
-								<i class="fas fa-hand-paper">
-									!!! Pas de formateur présent !!!
-								</i>
-							</div>
+
+							<a href="{{path('home_formateur',{id:animer.fkAnimerUser.id})}}">
+								<b>{{animer.fkAnimerUser.pseudo}}
+
+								{# je test si j'ai un formateur le matin ou l'après-midi #}
+								{% if animer.typeJournee == 1 %}
+									(matin)
+								{% elseif animer.typeJournee == 2 %}
+								(après-midi)
+								{% endif %}
+
+								</b>
+							</a>
+
+							{% set noFormateur = false %} {# la variable passe à false #}
+
 						{% endif %}
 
 					{% endfor %}
+
+					{# si je n'ai pas de formateur j'affiche une alerte #}
+					{% if noFormateur %}
+
+            <div class="alert alert-danger">
+              <i class="fas fa-hand-paper">
+                !!! Pas de formateur présent !!!
+              </i>
+            </div>
+
+					{% endif %}
+
 				</li>
 
 			</ul>

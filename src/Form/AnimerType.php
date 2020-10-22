@@ -31,7 +31,7 @@ class AnimerType extends AbstractType
             ])
             ->add('typeJournee', ChoiceType::class, [
                 'choices' => $this->getChoices(),
-                'label' => 'Type de journée'
+                'label' => 'Période'
             ])
             ->add('fkAnimerFormation', null, [
                 'placeholder' => 'Choisir une formation - ville',

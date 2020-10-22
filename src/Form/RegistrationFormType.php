@@ -57,7 +57,7 @@ class RegistrationFormType extends AbstractType
             ->add('confirmPassword', PasswordType::class, [
                 'attr' => [
                     'placeholder' => 'Confirmation mot de passe',
-                    'class' => 'form-control'
+                    'class' => 'form-control js-inputPassword'
                 ]
             ])
             ->add('plainPassword', PasswordType::class, [
@@ -67,7 +67,7 @@ class RegistrationFormType extends AbstractType
                 //^\S(?=\S{8,})(?=\S[a-z])(?=\S[A-Z])(?=\S[\d])\S*$
                 'attr' => [
                     'placeholder' => 'Mot de passe',
-                    'class' => 'form-control'
+                    'class' => 'form-control js-inputPassword'
                 ],
                 'mapped' => false,
                 'constraints' => [

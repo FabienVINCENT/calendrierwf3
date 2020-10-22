@@ -32,9 +32,13 @@
 									<i class="fa fa-lock"></i>
 								</span>
 							</div>
-							<input type="password" name="password" id="inputPassword" class="form-control" required placeholder="Mot de passe">
+							<input type="password" name="password" id="inputPassword" class="form-control js-inputPassword" required placeholder="Mot de passe">
+							<div class="input-group-append js-hidepassword">
+								<span class="input-group-text">
+									<i class="fas fa-eye"></i>
+								</span>
+							</div>
 						</div>
-
 						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 						<div class="checkbox mb-3">
