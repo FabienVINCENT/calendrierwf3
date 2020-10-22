@@ -35,6 +35,7 @@ class ApiController extends AbstractController
             $e['start'] = $formation->getDateDebut();
             $e['end'] = $formation->getDateFin();
             $e['backgroundColor'] = $formation->getColor();
+            $e['borderColor'] = $formation->getColor();
 
             $evenements[] = $e;
         }
@@ -164,6 +165,7 @@ class ApiController extends AbstractController
                 'description' => $animer->getFkAnimerUser()->getPseudo(),
                 'allDay' => $allDay,
                 'backgroundColor' => $bgColor,
+                'borderColor' => $bgColor,
             ];
         }
         return $this->json($data);
