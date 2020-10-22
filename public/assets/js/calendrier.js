@@ -69,20 +69,20 @@ $(document).ready(function () {
 			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'
 				+ '<tr><td class="p-2">Formateur : '
 				+ formateur + '</td></tr></table>')
-				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
-					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
-				};
+			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
+				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+			};
 		}
 		//modale pour afficher les infos des formations sur la liste de vue générale
 		else if ($('#listeFormation').is(':checked')) {
 
-		$('#modalAfficheDatesFormation').html('<table><tr>'
-			+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) +'</td>' + '</tr>'
-			+ '<tr>'
-			+ '<td class="p-2">'
-			+ 'Date de fin : '
-			+ dateObjet2.toLocaleDateString('fr-FR', options) +'</td>' + '</tr></table>'
-			+ '<button type="submit" id="js-ensavoirplus" data-formation="'+info.event.id+'" class="btn btn-info m-2">EN SAVOIR PLUS</button>');
+			$('#modalAfficheDatesFormation').html('<table><tr>'
+				+ '<td class="p-2">' + 'Date de début : ' + dateObjet.toLocaleDateString('fr-FR', options) + '</td>' + '</tr>'
+				+ '<tr>'
+				+ '<td class="p-2">'
+				+ 'Date de fin : '
+				+ dateObjet2.toLocaleDateString('fr-FR', options) + '</td>' + '</tr></table>'
+				+ '<button type="submit" id="js-ensavoirplus" data-formation="' + info.event.id + '" class="btn btn-info m-2">EN SAVOIR PLUS</button>');
 		}
 		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
 		else {
@@ -93,6 +93,7 @@ $(document).ready(function () {
 				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
 				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>')
+
 				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
 					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
 				};
@@ -116,7 +117,7 @@ $(document).ready(function () {
 			$.get('/api/formation/listnotended', function (data) {
 				data.forEach(evenement => {
 
-					if ($('.checkboxformation[data-id="'+evenement.id+'"]').is(':checked')) {
+					if ($('.checkboxformation[data-id="' + evenement.id + '"]').is(':checked')) {
 
 						calendar.addEvent(evenement)
 					}
@@ -160,8 +161,30 @@ $(document).ready(function () {
 
 	reloadData();
 
+
+	/**
+	 * Gestion du drag & drop
+	 */
+	calendar.on('eventChange', (e) => {
+		let id = e.oldEvent.id;
+		let newDate = e.event.startStr;
+		console.log(id, newDate);
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify(newDate),
+			url: '/api/editAnimer/' + id,
+			success: function (retour) {
+				console.log(retour)
+			}
+		})
+
+
+	});
+
+
 	// Gestion du cochage / décochage des checkboxs formations en fct du check général
-	$('#listeFormation').change(function(){
+	$('#listeFormation').change(function () {
 
 		if ($('#listeFormation').is(':checked')) {
 
@@ -175,7 +198,7 @@ $(document).ready(function () {
 		reloadData();
 
 	});
-	$('.insert2').change(reloadData);
+	$('.listformation').change(reloadData);
 
 	// Gestion du datepicker
 	$("#date").datepicker();
@@ -205,20 +228,20 @@ $(document).ready(function () {
 	// Gestion du bouton "En savoir plus" de la modale
 	$('#modalAfficheInfo').click((e) => {
 
-		if(e.target.nodeName!='BUTTON') {} else {
+		if (e.target.nodeName != 'BUTTON') { } else {
 
 			$('input[type=checkbox]').each((k, checkbox) => {
-			
+
 				let idFormation = $('#js-ensavoirplus').data('formation');
 
 				if ($(checkbox).data('id') == idFormation) {
 
 					$(checkbox).prop("checked", true);
 				}
-				else{ $(checkbox).prop("checked", false);}
+				else { $(checkbox).prop("checked", false); }
 			});
 		}
-	
+
 		$('#modalAfficheInfo').modal('hide');
 		reloadData();
 	});
@@ -236,7 +259,7 @@ $(document).ready(function () {
 					type: 'GET',
 					url: '/api/deleteAnimer/' + idAnimer,
 					success: function (retour) {
-						if(retour){
+						if (retour) {
 							$('#modalAfficheInfo').modal('hide');
 							reloadData();
 						} else {
@@ -244,7 +267,7 @@ $(document).ready(function () {
 						}
 					}
 				})
-    		}
+    	}
 		}
 	});
 })

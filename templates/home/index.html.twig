@@ -94,8 +94,10 @@
 
 	{# mes variables pour récupèrer les rôles et id de l'utilisateur qui voudra supprimer un crénaux #}
 	<script>
-		let isAdmin={% if is_granted('ROLE_ADMIN') %}true{% else %}false{% endif %};
-		let idFormateur = {{ app.user.id }};
+		let isAdmin ={% if is_granted('ROLE_ADMIN') %}true
+{% else %}
+false{% endif %};
+let idFormateur = {{ app.user.id }};
 	</script>
 
 {% endblock %}
