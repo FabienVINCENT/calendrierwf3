@@ -136,7 +136,7 @@ $(document).ready(function () {
 					now.setFullYear(now.getFullYear() - 1);
 					if (date > now) {
 						let event = [];
-						event['title'] = 'Jour Férie';
+						event['title'] = 'Jour Férié';
 						event['description'] = data[key];
 						event['start'] = key;
 						event['backgroundColor'] = '#F25E57';
