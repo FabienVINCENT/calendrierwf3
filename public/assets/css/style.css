@@ -127,8 +127,7 @@ body {
     margin-left: 0.5rem;
 }
 
-.listformation ul,
-.listformateur ul {
+.listformation ul, .listformateur ul {
     list-style: none;
 }
 
@@ -142,4 +141,30 @@ body {
         display: flex;
         flex-direction: row;
     }
+}
+.navbar-toggler:hover {
+    border-color:  #fbe56e!important;
+}
+
+.navbar-dark .navbar-brand{
+
+   color: #fbe56e!important; 
+}
+
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link{
+    color: #fbe56e!important;
+}
+
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link .navbar-dark .navbar-brand {
+    color :#fbe56e!important;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color :#fbe56e!important;
+.t-color {
+    background-color: rgba(52, 61, 140, 1);
+}
+
+.b-color {
+    background-color: #eceff1;
 }
