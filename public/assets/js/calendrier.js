@@ -1,6 +1,7 @@
 $(document).ready(function () {
-
-	let modeFonctionnement = ""
+	const AFFICHE_JF = true;
+	let urlJF = 'https://etalab.github.io/jours-feries-france-data/json/metropole.json';
+	let modeFonctionnement = "";
 
 	// On récupère le calendrier et on l'initialise
 	let calendarElt = document.querySelector("#calendrier")
@@ -39,6 +40,19 @@ $(document).ready(function () {
 	 */
 	function dateClickAdd(info) {
 		if (modeFonctionnement !== 'liste') {
+			// si une seul checkbox est cochée, alors on selectionne la formation dans le select
+			let checkedCheckbox = [];
+			$('.checkboxformation').each((k, checkbox) => {
+				if ($(checkbox).is(':checked')) {
+					checkedCheckbox.push($(checkbox).data('id'));
+				}
+			});
+			if ($(checkedCheckbox).length === 1) {
+				$('#fkAnimerFormation').val(checkedCheckbox[0]);
+				$('#fkAnimerFormation').trigger('change');
+			}
+
+
 			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 			let dateObjet = new Date(info.dateStr);
 			$('#modalAjoutDate').modal('show');
@@ -77,7 +91,7 @@ $(document).ready(function () {
 		}
 		//modale pour afficher les infos d'une formations se déroulant sur une plage horaire définie
 		else {
-   
+
 			$('#modalAfficheDatesFormation').html('<table><tr>' + '<td class="p-2">' + 'Date de début : '
 				+ dateObjet.toLocaleDateString('fr-FR', options) + ' de '
 				+ dateObjet.toLocaleTimeString('fr-FR', options2) + '</td>' + '</tr>' + '<tr>' + '<td class="p-2">' + 'Date de fin : '
@@ -97,6 +111,29 @@ $(document).ready(function () {
 		allEvent.forEach(e => {
 			e.remove();
 		});
+
+		// On affiche les jours férié
+		if (AFFICHE_JF) {
+			$.get(urlJF, function (data) {
+				let events = [];
+
+				Object.keys(data).forEach(key => {
+					let date = new Date(key);
+					let now = new Date();
+					now.setFullYear(now.getFullYear() - 1);
+					if (date > now) {
+						let event = [];
+						event['title'] = 'Jour Férie';
+						event['description'] = data[key];
+						event['start'] = key;
+						event['backgroundColor'] = '#F25E57';
+						event['borderColor'] = '#F25E57';
+						calendar.addEvent(event);
+					}
+				});
+
+			});
+		}
 
 		// Si la checkbox list all est cochée, on recupère la liste des formations
 		if ($('#listeFormation').is(':checked')) {
@@ -150,7 +187,7 @@ $(document).ready(function () {
 
 
 	// Gestion du cochage / décochage des checkboxs formations en fct du check général
-	$('#listeFormation').change(function(){
+	$('#listeFormation').change(function () {
 
 		if ($('#listeFormation').is(':checked')) {
 
