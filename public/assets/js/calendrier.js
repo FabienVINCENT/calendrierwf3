@@ -93,12 +93,11 @@ $(document).ready(function () {
 				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
 				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>')
-			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
-				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
-			};
 
+				if ( isAdmin || idFormateur == info.event.extendedProps.idFormateur ) {
+					$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
+				};
 		}
-
 	}
 
 	/**
@@ -268,9 +267,7 @@ $(document).ready(function () {
 						}
 					}
 				})
-			}
-
+    	}
 		}
 	});
-
 })
