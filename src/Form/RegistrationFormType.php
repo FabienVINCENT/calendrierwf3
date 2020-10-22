@@ -63,8 +63,6 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                //^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$ 
-                //^\S(?=\S{8,})(?=\S[a-z])(?=\S[A-Z])(?=\S[\d])\S*$
                 'attr' => [
                     'placeholder' => 'Mot de passe',
                     'class' => 'form-control js-inputPassword'
@@ -80,11 +78,10 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
-                    // TODO
-                    // new Regex([
-                    //     'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,})$/u',
-                    //     'message' => 'Votre mot de passe doit contenir : Une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial ( -, +, !, *, $, @, %, _ )'
-                    // ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,})$/u',
+                        'message' => 'Votre mot de passe doit contenir : Une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial ( -, +, !, *, $, @, %, _ )'
+                    ]),
                 ],
             ]);
     }

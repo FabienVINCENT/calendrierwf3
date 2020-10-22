@@ -43,12 +43,13 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                return $guardHandler->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $authenticator,
-                    'main' // firewall name in security.yaml
-                );
+                return $this->redirectToRoute('app_login');
+                // return $guardHandler->authenticateUserAndHandleSuccess(
+                //     $user,
+                //     $request,
+                //     $authenticator,
+                //     'main' // firewall name in security.yaml
+                // );
             } else {
                 // Sinon (les deux mot de passe sont différents)
                 $this->addFlash(

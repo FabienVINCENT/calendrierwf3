@@ -71,7 +71,7 @@ class ProfilController extends AbstractController
     }
 
     /**
-     * @Route("/resetpass", name="resetpass")
+     * @Route("/reset", name="reset")
      */
     public function resetPassword(UserPasswordEncoderInterface $passwordEncoder, Request $request)
     {
@@ -80,29 +80,29 @@ class ProfilController extends AbstractController
         $form = $this->createForm(ChangePasswordType::class, $user);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $oldPassword = $request->request->get('change_password')['oldPassword'];
 
             //Si ancien mot de passe vérifié =>
-            if($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
                 $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($newEncodedPassword);
 
                 $em->persist($user);
                 $em->flush();
 
-                $this->addFlash('notice','Votre mot de passe a bien été changé !');
+                $this->addFlash('notice', 'Votre mot de passe a bien été changé !');
 
                 return $this->redirectToRoute('profil_index');
-            
-            // Si échec de la vérification de l'ancien mot de passe =>
+
+                // Si échec de la vérification de l'ancien mot de passe =>
             } else {
                 $form->addError(new FormError('Ancien mot de passe incorrect'));
             }
         }
         return $this->render('profil\resetPassword.html.twig', array(
-            'form'=>$form->createView(),
+            'form' => $form->createView(),
         ));
     }
 }
