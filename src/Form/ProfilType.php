@@ -13,11 +13,10 @@ class ProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('lastname')
-            ->add('firstname')
-            ->add('phoneNumber')
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+            ->add('email', null, ['label' => 'Adresse Mail:'])
+            ->add('lastname', null, ['label' => 'Nom:'])
+            ->add('firstname', null, ['label' => 'Prénom:'])
+            ->add('phoneNumber', null, ['label' => 'Téléphone:']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

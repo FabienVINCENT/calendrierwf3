@@ -1,0 +1,104 @@
+{% extends '@!EasyAdmin/page/content.html.twig' %}
+
+{% block page_content %}
+
+	{# section pour la bande du haut #}
+	<section class="row mb-3">
+		<div>Bonjour
+			{{ admin }}</div>
+		<div class="font-weight-bold ml-auto">{{ "now"|date("d M. Y") }}</div>
+	</section>
+
+	{# section pour la date du jour #}
+	<section class="row">
+		<u class="font-weight-bold my-2 col-12">Planning du jour</u>
+
+		{% for formation in formations %}
+
+			<ul class="list-group col-6 mb-1">
+
+				<li class="list-group-item active">
+					<u>Formation:</u>
+					{{formation.nom}}
+					du
+					{{ formation.dateDebut|date('d M. Y') }}
+					au
+					{{ formation.dateFin|date('d M. Y') }}</li>
+				<li class="list-group-item">
+					<u>Ville:</u>
+					{{formation.localisation.ville}}
+				</li>
+
+				<li class="list-group-item">
+					<u>Formateur:</u>
+					{% for animer in formation.animers %}
+
+						{% if animer.date|date('d M. Y') == "now"|date('d M. Y') %}
+							<a href="{{path('home_formateur',{id:animer.fkAnimerUser.id})}}">{{ (animer.fkAnimerUser.pseudo) }}</a>
+							{# {{ dump(animer.fkAnimerUser.pseudo) }} #}
+						{% else %}
+							<div class="alert alert-danger">
+								<i class="fas fa-hand-paper">
+									!!! Pas de formateur présent !!!
+								</i>
+							</div>
+						{% endif %}
+
+					{% endfor %}
+				</li>
+
+			</ul>
+
+		{% endfor %}
+
+	</section>
+
+	{# section pour la date du lendemain #}
+	<section class="row">
+		<div class="font-weight-bold mt-5 mb-2 col-12">
+			<u>Et demain:</u>
+			{{ "now"|date_modify("+1 day")|date("d M. Y") }}</div>
+
+		{% for formation in formations %}
+
+			<ul class="list-group col-6 mb-1">
+
+				<li class="list-group-item active">
+					<u>Formation:</u>
+					{{formation.nom}}
+					du
+					{{ formation.dateDebut|date('d M. Y') }}
+					au
+					{{ formation.dateFin|date('d M. Y') }}</li>
+				<li class="list-group-item">
+					<u>Ville:</u>
+					{{formation.localisation.ville}}
+				</li>
+
+				<li class="list-group-item">
+					<u>Formateur:</u>
+					{% for animer in formation.animers %}
+
+						{% if animer.date|date('d M. Y') == "now"|date_modify("+1 day")|date("d M. Y") %}
+							{{ (animer.fkAnimerUser.pseudo) }}
+						{% else %}
+							<div class="alert alert-danger">
+								<i class="fas fa-hand-paper">
+									!!! Pas de formateur présent !!!
+								</i>
+							</div>
+						{% endif %}
+
+					{% endfor %}
+				</li>
+
+			</ul>
+
+		{% endfor %}
+
+	</section>
+
+	{# {{ dump(formation.animers) }} #}
+	{# {{ dump(formation) }} #}
+
+{% endblock %}

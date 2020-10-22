@@ -6,6 +6,7 @@ use App\Entity\Formations;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -27,6 +28,7 @@ class FormationsCrudController extends AbstractCrudController
             AssociationField::new('localisation'),
             DateField::new('dateDebut', 'Date de début de la formation'),
             DateField::new('dateFin', 'Date de fin de la formation'),
+            ColorField::new('color', 'Couleur d\'affichage'),
         ];
     }
 }

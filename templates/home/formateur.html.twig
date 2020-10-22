@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig==" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="{{asset('assets/lib/fullcalendar/main.min.css')}}">
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div id="loadingDiv">
+		<img src="{{asset('assets/loading.gif')}}" alt="">
+	</div>
+	<div class="row">
+		<div id="formation" class="col-md-3 mt-3">
+			<div>
+				<h5>Choisir un formateur</h5>
+				<select name="listFormateur" id="listFormateur" class="custom-select js-select2-formateur">
+					{% for user in listFormateur %}
+						<option value="{{user.id}}" {% if formateur.id==user.id %} selected {% endif %}>{{user}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<p class="mt-3">
+				<h5>Formateur sélectionné</h5>
+				{{formateur.firstname}}
+				{{formateur.lastname}}
+			</p>
+			<p>
+				<a href="tel:{{formateur.phoneNumber}}">{{formateur.phonenumber}}</a>
+				<a href="mailto:{{formateur.email}}">{{formateur.email}}</a>
+			</p>
+			<h5>liste de compétenses</h5>
+			<ul>
+				{% for talent in formateur.talents %}
+					<li>{{talent.nom}}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-9 mt-3">
+			<div id="calendrier"></div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{asset('assets/lib/fullcalendar/main.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('assets/lib/fullcalendar/locales/fr.js')}}" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous"></script>
+	<script src="{{asset('assets/js/formateur.js')}}" type="text/javascript"></script>
+	<script src="{{asset('bundles/fosjsrouting/js/router.js')}}" type="text/javascript"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}

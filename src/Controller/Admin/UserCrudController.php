@@ -49,11 +49,19 @@ class UserCrudController extends AbstractCrudController
             $talentField = AssociationField::new('talents', 'Compétences');
         }
 
+        /*Si je suis sur la page de création d'un user j'affiche le mot de passe de la BDD (obligatoire)
+        sinon, j'affiche le plainPassword (qui n'est pas obligatoire)*/
+        if (Crud::PAGE_NEW === $pageName) {
+            $plainPassword = TextField::new('password', 'Mot de passe')->setFormType(PasswordType::class)->onlyOnForms();
+        } else {
+            $plainPassword = TextField::new('plainPassword', 'Mot de passe')->setFormType(PasswordType::class)->onlyOnForms();
+        }
+
         return [
             TextField::new('firstname', 'Nom'),
             TextField::new('lastname', 'Prénom'),
             TextField::new('email', 'Email'),
-            TextField::new('password', 'Mot de passe')->setFormType(PasswordType::class)->onlyOnForms(),
+            $plainPassword,
             TextField::new('phoneNumber', 'Numéro de téléphone'),
             ChoiceField::new('roles')->setChoices(['Admin' => 'ROLE_ADMIN', 'Formateur' => 'ROLE_FORMATEUR'])->allowMultipleChoices(),
             $talentField
@@ -72,8 +80,10 @@ class UserCrudController extends AbstractCrudController
     // Je redéfinie la méthode update de 'AbstractCrudController'
     public function updateEntity(EntityManagerInterface $em, $user): void
     {
-        $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
-        $user->setPassword($encodedPassword);
+        if ($user->getPlainPassword() != null) {
+            $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($encodedPassword);
+        }
 
         parent::updateEntity($em, $user);
     }

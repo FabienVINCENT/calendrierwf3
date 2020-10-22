@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
             ))
             ->setLastname('Admin')
             ->setFirstname('user')
-            ->setPhoneNumber('+33631121877')
+            ->setPhoneNumber('+33612345678')
             ->setRoles(['ROLE_ADMIN']);
         // On persiste l'admin
         $manager->persist($admin);
@@ -94,11 +94,12 @@ class AppFixtures extends Fixture
         }
         // Creation des formation
         $formations = ['Developpeur web', 'TSSR', 'Espagnol', 'Apprentissage du chant'];
-        $dateDebut = ['2020-01-15', '2020-02-15', '2020-03-15', '2020-04-15'];
-        $dateFin = ['2020-03-15', '2020-04-15', '2020-05-15', '2020-06-15'];
+        $dateDebut = ['2020-10-01', '2020-10-15', '2020-10-20', '2020-10-30'];
+        $dateFin = ['2020-10-25', '2020-11-15', '2020-11-20', '2020-11-30'];
         for ($i = 0; $i < 4; $i++) {
             $formation = new Formations();
             $formation->setNom($formations[$i]);
+            $formation->setColor($this->faker->hexcolor);
             $formation->setDateDebut(new \DateTime($dateDebut[$i]));
             $formation->setDateFin(new \DateTime($dateFin[$i]));
             $formation->setLocalisation($endroits[array_rand($endroits)]);

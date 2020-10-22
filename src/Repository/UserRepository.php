@@ -36,15 +36,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function getInfosUser()
+    public function getFormateurs()
     {
         return $this->createQueryBuilder('u')
-            ->select('u.id, u.email,u.roles, u.firstname, u.lastname, u.phoneNumber')
             ->where('u.roles LIKE :roles')
             ->setParameter('roles', '%"' . 'ROLE_FORMATEUR' . '"%')
             ->getQuery()
             ->getResult();
     }
+
     public function getInfosUserById(int $id)
     {
         return $this->createQueryBuilder('u')
@@ -54,6 +54,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+
     public function getInfosUserByIdTata(int $id)
     {
         return $this->createQueryBuilder('u')
@@ -62,6 +63,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

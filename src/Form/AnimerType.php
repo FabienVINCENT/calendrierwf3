@@ -36,6 +36,10 @@ class AnimerType extends AbstractType
             ->add('fkAnimerFormation', null, [
                 'placeholder' => 'Choisir une formation - ville',
                 'attr' => ['class' => 'js-select2-formateur'],
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('f')
+                        ->andWhere('f.dateFin >= CURRENT_DATE()');
+                },
                 'label' => 'Formation - Ville'
             ]);
 
