@@ -131,6 +131,17 @@ body {
     list-style: none;
 }
 
+
+.fc-header-toolbar.fc-toolbar {
+    display: flex;
+    flex-direction: column;
+}
+@media(min-width: 720px) {
+    .fc-header-toolbar.fc-toolbar {
+        display: flex;
+        flex-direction: row;
+    }
+}
 .navbar-toggler:hover {
     border-color:  #fbe56e!important;
 }

@@ -17,11 +17,11 @@
 	</div>
 	<div class="row">
 		<div id="formation" class="col-md-3 mt-3">
-			<div class="formations mb-2 p-2">
+			<div class="formations mb-2 pl-3">
 				<input type="checkbox" class="form-check-input" id="listeFormation" checked><h5>Liste des formations</h5>
 				<div class="listformation">
 					{% for formation in formations %}
-						<div class="form-group form-check" style="background-color:{{formation.color}}">
+						<div class="form-group form-check" style="background-color:{{formation.color}}; margin-left:1rem">
 							<input type="checkbox" id="check{{formation.id}}" checked class="form-check-input checkboxformation" data-id="{{formation.id}}">
 							<label class="form-check-label" for="check{{formation.id}}">
 								{{formation.nom}}
@@ -32,13 +32,18 @@
 					{% endfor %}
 				</div>
 			</div>
-			<div id="formateur" class="formateurs p-2">
+			<div id="formateur" class="formateurs pl-3">
 				<h5>Liste des formateurs</h5>
 				<div class="listformateur">
 					<ul class="p-0">
 						{% for formateur in formateurs %}
 							<li>
 								<a href="{{path('home_formateur',{id:formateur.id})}}">{{formateur.pseudo}}</a>
+								<small>
+									{% for talent in formateur.talents %}
+										{{talent.nom}}
+									{% endfor %}
+								</small>
 							</li>
 						{% endfor %}
 					</ul>
@@ -94,9 +99,11 @@
 
 	{# mes variables pour récupèrer les rôles et id de l'utilisateur qui voudra supprimer un crénaux #}
 	<script>
-		let isAdmin ={% if is_granted('ROLE_ADMIN') %}true
+		let isAdmin = {% if is_granted('ROLE_ADMIN') %}
+true
 {% else %}
-false{% endif %};
+false
+{% endif %};
 let idFormateur = {{ app.user.id }};
 	</script>
 

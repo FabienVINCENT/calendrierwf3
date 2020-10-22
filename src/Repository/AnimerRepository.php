@@ -30,6 +30,17 @@ class AnimerRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    /**
+     * @return Animer[] Returns an array of Animer objects
+     */
+    public function findByFormationFullId($idFormation)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.fkAnimerFormation = :id')
+            ->setParameter('id', $idFormation)
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * @return Animer[] Returns an array of Animer objects
@@ -39,6 +50,17 @@ class AnimerRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.fkAnimerUser = :id')
             ->setParameter('id', $idUser)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function isDispo($iduser, $date)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.fkAnimerUser = :id')
+            ->setParameter('id', $iduser)
+            ->andWhere('a.date = :date')
+            ->setParameter('date', $date)
             ->getQuery()
             ->getResult();
     }

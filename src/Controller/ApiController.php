@@ -86,6 +86,54 @@ class ApiController extends AbstractController
         }
         return $this->json($data);
     }
+
+    /**
+     * @Route("animerfull/", name="animer_full", methods={"POST"}, format="json")
+     */
+    public function getAnimerFull(AnimerRepository $repo, Request $request)
+    {
+        $animers = $repo->findByfkAnimerFormation(json_decode($request->getContent()));
+        $data = [];
+        foreach ($animers as $animer) {
+            $start = clone $animer->getDate();
+            $end = clone $animer->getDate();
+            $typeJournee = $animer->getTypeJournee();
+            $bgColor = $animer->getFkAnimerFormation()->getColor();
+            $allDay = false;
+            switch ($typeJournee) {
+                case '0':
+                    $start->setTime(Animer::DEBUT_MATINNEE, 0);
+                    $end->setTime(Animer::FIN_APRESMIDI, 0);
+                    $allDay = true;
+                    break;
+                case '1':
+                    $start->setTime(Animer::DEBUT_MATINNEE, 0);
+                    $end->setTime(Animer::FIN_MATINNEE, 0);
+                    break;
+                case '2':
+                    $start->setTime(Animer::DEBUT_APRESMIDI, 0);
+                    $end->setTime(Animer::FIN_APRESMIDI, 0);
+                    break;
+            }
+
+            $data[] = [
+                'id' => $animer->getId(),
+                'start' => $start,
+                'end' => $end,
+                'title' => $animer->getFkAnimerFormation()->getNom() . '/' . $animer->getFkAnimerFormation()->getLocalisation()->getVille(),
+                'description' => $animer->getFkAnimerUser()->getPseudo(),
+                'idFormateur' => $animer->getFkAnimerUser()->getId(),
+                'allDay' => $allDay,
+                'backgroundColor' => $bgColor,
+                'borderColor' => $bgColor,
+                'editable' => true
+            ];
+        }
+        return $this->json($data);
+    }
+
+
+
     /**
      * @Route("addAnimer", name="addAnimer", methods={"POST"})
      */
@@ -204,6 +252,25 @@ class ApiController extends AbstractController
             $em->flush();
 
 
+            return $this->json(true);
+        } catch (\Exception $e) {
+            return $this->json($e);
+        }
+    }
+
+    /**
+     * @Route("isDispo/", name="isDispo", methods={"POST"})
+     * Gestion edit drag&drop
+     */
+    public function isDispo(EntityManagerInterface $em, AnimerRepository $repo, Request $request)
+    {
+        try {
+            $infos = json_decode($request->getContent());
+            $retour = $repo->isDispo($infos[1], $infos[0]);
+
+            if (count($retour) > 0) {
+                return $this->json(false);
+            }
             return $this->json(true);
         } catch (\Exception $e) {
             return $this->json($e);
