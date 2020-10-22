@@ -81,6 +81,7 @@ class ApiController extends AbstractController
                 'allDay' => $allDay,
                 'backgroundColor' => $bgColor,
                 'borderColor' => $bgColor,
+                'editable' => true
             ];
         }
         return $this->json($data);
@@ -178,15 +179,12 @@ class ApiController extends AbstractController
      */
     public function deleteAnimer(EntityManagerInterface $em, Animer $animer)
     {
-        try{
+        try {
             $em->remove($animer);
             $em->flush();
             return $this->json(true);
-
         } catch (\Exception $e) {
             return $this->json(false);
         }
-
     }
-
 }
