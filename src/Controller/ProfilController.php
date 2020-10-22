@@ -82,8 +82,6 @@ class ProfilController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
 
-            // $passwordEncoder = $this->get('security.password_encoder');
-            // dump($request->request);die();
             $oldPassword = $request->request->get('change_password')['oldPassword'];
 
             //Si ancien mot de passe vérifié =>
