@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Formations;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -18,6 +19,13 @@ class FormationsCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Formations::class;
+    }
+
+    // fonction pour changer le titre de la page
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+        ->setPageTitle('index', 'Gestion des formations');
     }
 
     // la configuration du formulaire  pour créer une formation
