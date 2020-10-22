@@ -131,3 +131,11 @@ body {
 .listformateur ul {
     list-style: none;
 }
+
+.t-color {
+    background-color: rgba(52, 61, 140, 1);
+}
+
+.b-color {
+    background-color: #eceff1;
+}
