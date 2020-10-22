@@ -68,14 +68,11 @@ $(document).ready(function () {
 	 * Function de gestion des affichages d'infos
 	 */
 	function afficheInfo(info) {
-		console.log(info);
 		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 		const options2 = { timeZone: "UTC" };
 		let dateObjet = new Date(info.event.start);
 		let dateObjet2 = new Date(info.event.end);
 		let formateur = info.event.extendedProps.description;
-
-		console.log(info);
 
 		$('#modalAfficheInfo').modal('show');
 		$('#modalAfficheFormation').html('Formation : ' + info.event.title);
@@ -192,6 +189,24 @@ $(document).ready(function () {
 				});
 			} else {
 				// Il y a plus qu'une formation alors on les affiche comme sur l'accueil
+				let tableau = [];
+				$(checkedCheckbox).each((k, checkbox) => {
+					if ($(checkbox).is(':checked')) {
+						tableau.push($(checkbox).data('id'));
+					}
+				});
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify(tableau),
+					url: '/api/animerfull/',
+					success: function (data) {
+						data.forEach(evenement => {
+							calendar.addEvent(evenement)
+						})
+					}
+				})
+
+
 
 				// On change le mode de fonctionnement
 				modeFonctionnement = 'liste';
@@ -208,14 +223,15 @@ $(document).ready(function () {
 	calendar.on('eventChange', (e) => {
 		let id = e.oldEvent.id;
 		let newDate = e.event.startStr;
-		console.log(id, newDate);
 
 		$.ajax({
 			type: 'POST',
 			data: JSON.stringify(newDate),
 			url: '/api/editAnimer/' + id,
 			success: function (retour) {
-				console.log(retour)
+				if (retour == false) {
+					alert('erreur au changement de date')
+				}
 			}
 		})
 	});
@@ -246,7 +262,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$.ajax({
 			type: 'POST',
-			url: '/addAnimer',
+			url: '/api/addAnimer',
 			data: $('#modalAjoutDate').find('form').serialize(),
 			success: function (retour) {
 				$('.js-alert-form').each(function (div) {
@@ -290,7 +306,6 @@ $(document).ready(function () {
 	// Gestion du bouton de suppression d'un animer (crénaux formateur)
 	$('#modalAfficheInfo').click((e) => {
 		e.preventDefault();
-		console.log(e.target);
 		if (e.target.nodeName == 'A') {
 			let idAnimer = $(e.target).data('animer');
 
@@ -312,4 +327,34 @@ $(document).ready(function () {
 
 		}
 	});
+
+	//Gestion de la disponibilité
+	$('#fkAnimerUser').change(function () {
+		let idUserSelect = $('#fkAnimerUser').val();
+		let date = $('#date').val();
+
+		$.ajax({
+			type: 'POST',
+			data: JSON.stringify([date, idUserSelect]),
+			url: '/api/isDispo/',
+			success: function (retour) {
+				$('.js-alert-form').each(function (div) {
+					$(this).remove();
+				})
+				if (retour) {
+					$('#modalAjoutDate .modal-body').append('<div class="alert alert-success js-alert-form" role="alert">' +
+						'Le formateur est disponible' +
+						'</div>')
+				} else {
+					$('#modalAjoutDate .modal-body').append('<div class="alert alert-danger js-alert-form" role="alert">' +
+						'Le formateur a déjà une autre formation, attention !' +
+						'</div > ')
+
+				}
+			}
+		})
+
+	})
+
+
 })
