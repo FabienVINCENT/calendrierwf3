@@ -26,15 +26,23 @@
 				</select>
 			</div>
 			<p class="mt-3">
-				<h5>Formateur sélectionné</h5>
-				{{formateur.firstname}}
-				{{formateur.lastname}}
+				<h5>Formateur</h5>
+				<ul style="list-style:none">
+					<li>
+						<i class="fas fa-user"></i>
+						{{formateur.firstname}}
+						{{formateur.lastname}}</li>
+					<li>
+						<i class="fas fa-phone"></i>
+						<a href="tel:{{formateur.phoneNumber}}">{{formateur.phonenumber}}</a>
+					</li>
+					<Li>
+						<i class="fas fa-envelope"></i>
+						<a href="mailto:{{formateur.email}}">{{formateur.email}}</a>
+					</li>
+				</ul>
 			</p>
-			<p>
-				<a href="tel:{{formateur.phoneNumber}}">{{formateur.phonenumber}}</a>
-				<a href="mailto:{{formateur.email}}">{{formateur.email}}</a>
-			</p>
-			<h5>liste de compétenses</h5>
+			<h5>Liste de compétences</h5>
 			<ul>
 				{% for talent in formateur.talents %}
 					<li>{{talent.nom}}</li>

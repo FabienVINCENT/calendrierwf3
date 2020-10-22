@@ -8,8 +8,8 @@
 
 		<h1 class="col-12 text-center mt-2">Enregistrement</h1>
 
-		<div class="col-12 px-5">
-			<div class="card register__form ">
+		<div class="col-12 px-md-5 row">
+			<div class="card register__form col-md-8 mx-auto ">
 				<article class="card-body mx-auto">
 
 					{{ form_start(registrationForm) }}
@@ -91,8 +91,7 @@
 					</div>
 					<!-- form-group// -->
 					<div class="form-group form-check">
-						{{ form_widget(registrationForm.agreeTerms) }}
-						{{ form_label(registrationForm.agreeTerms) }}
+						{{ form_row(registrationForm.agreeTerms,{'label':'En m\'enregistrant, j\'accepte que mes données fassent l\'objet de traitement informatique pour le bon fonctionnement de l\'application'}) }}
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-primary btn-block">S'enregistrer</button>

@@ -15,7 +15,7 @@
 
 		{% for formation in formations %}
 
-			<ul class="list-group col-6 mb-1">
+			<ul class="list-group col-md-6 mb-1">
 
 				<li class="list-group-item active">
 					<u>Formation:</u>
@@ -48,7 +48,7 @@
 									{% if animer.typeJournee == 1 %}
 										(matin)
 									{% elseif animer.typeJournee == 2 %}
-									(après-midi)
+										(après-midi)
 									{% endif %}
 
 								</b>
@@ -64,11 +64,11 @@
 					{# si je n'ai pas de formateur j'affiche une alerte #}
 					{% if noFormateur %}
 
-            <div class="alert alert-danger">
-              <i class="fas fa-hand-paper">
-                !!! Pas de formateur présent !!!
-              </i>
-            </div>
+						<div class="alert alert-danger">
+							<i class="fas fa-hand-paper">
+								!!! Pas de formateur présent !!!
+							</i>
+						</div>
 
 					{% endif %}
 
@@ -88,7 +88,7 @@
 
 		{% for formation in formations %}
 
-			<ul class="list-group col-6 mb-1">
+			<ul class="list-group col-md-6 mb-1">
 
 				<li class="list-group-item active">
 					<u>Formation:</u>
@@ -115,17 +115,18 @@
 							<a href="{{path('home_formateur',{id:animer.fkAnimerUser.id})}}">
 								<b>{{animer.fkAnimerUser.pseudo}}
 
-								{# je test si j'ai un formateur le matin ou l'après-midi #}
-								{% if animer.typeJournee == 1 %}
-									(matin)
-								{% elseif animer.typeJournee == 2 %}
-								(après-midi)
-								{% endif %}
+									{# je test si j'ai un formateur le matin ou l'après-midi #}
+									{% if animer.typeJournee == 1 %}
+										(matin)
+									{% elseif animer.typeJournee == 2 %}
+										(après-midi)
+									{% endif %}
 
 								</b>
 							</a>
 
-							{% set noFormateur = false %} {# la variable passe à false #}
+							{% set noFormateur = false %}
+							{# la variable passe à false #}
 
 						{% endif %}
 
@@ -134,11 +135,11 @@
 					{# si je n'ai pas de formateur j'affiche une alerte #}
 					{% if noFormateur %}
 
-            <div class="alert alert-danger">
-              <i class="fas fa-hand-paper">
-                !!! Pas de formateur présent !!!
-              </i>
-            </div>
+						<div class="alert alert-danger">
+							<i class="fas fa-hand-paper">
+								!!! Pas de formateur présent !!!
+							</i>
+						</div>
 
 					{% endif %}
 
