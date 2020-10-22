@@ -179,8 +179,6 @@ $(document).ready(function () {
 				console.log(retour)
 			}
 		})
-
-
 	});
 
 
