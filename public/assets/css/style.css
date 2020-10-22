@@ -150,4 +150,10 @@ body {
 
 .navbar-dark .navbar-nav .nav-link{
     color :#fbe56e!important;
+.t-color {
+    background-color: rgba(52, 61, 140, 1);
+}
+
+.b-color {
+    background-color: #eceff1;
 }

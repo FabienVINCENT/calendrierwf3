@@ -190,7 +190,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("editAnimer/{id}", name="deleteAnimer", methods={"POST"})
+     * @Route("editAnimer/{id}", name="editAnimer", methods={"POST"})
      * Gestion edit drag&drop
      */
     public function editAnimer(EntityManagerInterface $em, Animer $animer, Request $request)
