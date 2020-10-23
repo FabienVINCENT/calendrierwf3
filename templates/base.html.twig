@@ -24,48 +24,52 @@
 			<nav class="navbar navbar-expand-lg navbar-dark">
 				<a class="navbar-brand" href="{{path('home') }}">Calendrier Webforce3</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				  </button>
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					{% if app.user %}
 						<ul class="navbar-nav mr-auto">
-
 							<li class="nav-item active">
-
-								<a class="nav-link" href="{{path('home')}}"><i class="far fa-calendar-alt"></i> Agenda</a>
+								<a class="nav-link" href="{{path('home')}}">
+									<i class="fas fa-calendar-alt"></i>
+									Agenda</a>
 							</li>
 							<li class="nav-item active">
-								<a class="nav-link" href="{{path('home_formateur',{id:app.user.id})}}"><i class="fas fa-chalkboard-teacher"></i>Planning formateurs</a>
+								<a class="nav-link" href="{{path('home_formateur',{id:app.user.id})}}">
+									<i class="fas fa-chalkboard-teacher"></i>Planning formateurs</a>
 							</li>
 							{% if is_granted('ROLE_ADMIN') %}
 								<li class="nav-item active">
-									<a class="nav-link" href="{{path('admin')}}"><i class="fas fa-tools"></i>Administration</a>
+									<a class="nav-link" href="{{path('admin')}}">
+										<i class="fas fa-tools"></i>Administration</a>
 								</li>
 							{% endif %}
 						</ul>
 					{% endif %}
-				{% if app.user %}
-					<ul class="navbar-nav mr-0">
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i>{{app.user.pseudo}}</a>
-							<div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="{{path('profil_index')}}">Mon profil</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="{{path('app_logout')}}">Déconnecter</a>
-							</div>
-						</li>
-					</ul>
-				{% else %}
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="{{path('app_login')}}">Login</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="{{path('app_register')}}">Register</a>
-						</li>
-					</ul>
-				{% endif %}
+					{% if app.user %}
+						<ul class="navbar-nav mr-0">
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fa-user"></i>
+									{{app.user.pseudo}}</a>
+								<div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="{{path('profil_index')}}">Mon profil</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="{{path('app_logout')}}">Déconnecter</a>
+								</div>
+							</li>
+						</ul>
+					{% else %}
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item active">
+								<a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="{{path('app_register')}}">Créer un compte</a>
+							</li>
+						</ul>
+					{% endif %}
 				</div>
 			</nav>
 		</header>

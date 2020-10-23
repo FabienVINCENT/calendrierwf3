@@ -174,8 +174,9 @@ body {
     background-color: #eceff1;
 }
 
-.fas {
-    margin-right: 1rem
+.fas,
+.far {
+    margin-right: 0.5rem
 }
 @media(min-width: 720px) {
     .fc-header-toolbar.fc-toolbar {
