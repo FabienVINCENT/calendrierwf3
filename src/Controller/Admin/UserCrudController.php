@@ -60,7 +60,7 @@ class UserCrudController extends AbstractCrudController
         return [
             TextField::new('firstname', 'Nom'),
             TextField::new('lastname', 'Prénom'),
-            TextField::new('pseudo', 'Pseudo'),
+            //TextField::new('pseudo', 'Pseudo'),
             TextField::new('email', 'Email'),
             $plainPassword,
             TextField::new('phoneNumber', 'Numéro de téléphone'),
@@ -73,7 +73,7 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-        ->setPageTitle('index', 'Gestion des utilisateurs');
+            ->setPageTitle('index', 'Gestion des utilisateurs');
     }
 
 
