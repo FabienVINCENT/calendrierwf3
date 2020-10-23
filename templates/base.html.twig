@@ -32,14 +32,15 @@
 						<ul class="navbar-nav mr-auto">
 
 							<li class="nav-item active">
-								<a class="nav-link" href="{{path('home')}}">Agenda</a>
+
+								<a class="nav-link" href="{{path('home')}}"><i class="far fa-calendar-alt"></i> Agenda</a>
 							</li>
 							<li class="nav-item active">
-								<a class="nav-link" href="{{path('home_formateur',{id:app.user.id})}}">Planning formateurs</a>
+								<a class="nav-link" href="{{path('home_formateur',{id:app.user.id})}}"><i class="fas fa-chalkboard-teacher"></i>Planning formateurs</a>
 							</li>
 							{% if is_granted('ROLE_ADMIN') %}
 								<li class="nav-item active">
-									<a class="nav-link" href="{{path('admin')}}">Administration</a>
+									<a class="nav-link" href="{{path('admin')}}"><i class="fas fa-tools"></i>Administration</a>
 								</li>
 							{% endif %}
 						</ul>
@@ -47,7 +48,7 @@
 				{% if app.user %}
 					<ul class="navbar-nav mr-0">
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{app.user.pseudo}}</a>
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i>{{app.user.pseudo}}</a>
 							<div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
 								<a class="dropdown-item" href="{{path('profil_index')}}">Mon profil</a>
 								<div class="dropdown-divider"></div>
