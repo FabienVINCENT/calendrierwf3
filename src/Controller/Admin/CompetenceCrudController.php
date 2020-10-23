@@ -29,7 +29,7 @@ class CompetenceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom', 'Nom de la formation'),
+            TextField::new('nom', 'Nom de la compétence'),
         ];
     }
 
