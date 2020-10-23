@@ -23,7 +23,7 @@ class ApiController extends AbstractController
 {
     /**
      * @Route("formation/listnotended", name="listNotEndedFormation", methods={"GET","POST"}, format="json")
-     * Route qui affiche les formations sur l'accueil
+     * Fonction qui affiche les formations sur l'accueil
      */
     public function listNotEndedFormation(FormationsRepository $formationRepo)
     {
@@ -44,12 +44,14 @@ class ApiController extends AbstractController
 
     /**
      * @Route("animer/{id}", name="animer_solo", methods={"GET"}, format="json")
+     * Fonction qui affiche les crénaux lors une seule formation est sélectionné
      */
     public function getAnimerId(Formations $formation, AnimerRepository $repo)
     {
         $animers = $repo->findByFormationId($formation->getId());
         $data = [];
         foreach ($animers as $animer) {
+            // On construit l'objet evenement comme l'attends fullcalendar
             $start = clone $animer->getDate();
             $end = clone $animer->getDate();
             $typeJournee = $animer->getTypeJournee();
@@ -89,12 +91,15 @@ class ApiController extends AbstractController
 
     /**
      * @Route("animerfull/", name="animer_full", methods={"POST"}, format="json")
+     * Fonction qui affiche les crénaux lors plusieurs formations sont sélectionnés
      */
     public function getAnimerFull(AnimerRepository $repo, Request $request)
     {
+        // On récupère quelles formations sont sélectionnées
         $animers = $repo->findByfkAnimerFormation(json_decode($request->getContent()));
         $data = [];
         foreach ($animers as $animer) {
+            // On construit l'objet evenement comme l'attends fullcalendar
             $start = clone $animer->getDate();
             $end = clone $animer->getDate();
             $typeJournee = $animer->getTypeJournee();
@@ -133,9 +138,9 @@ class ApiController extends AbstractController
     }
 
 
-
     /**
      * @Route("addAnimer", name="addAnimer", methods={"POST"})
+     * Fonction qui permet d'ajouter un crénaux
      */
     public function ajoutAnimer(Request $request, EntityManagerInterface $em)
     {
@@ -143,9 +148,8 @@ class ApiController extends AbstractController
         $form = $this->createForm(AnimerType::class, $animer);
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted()) {
+            // On fait des vérifications
             if (null == $animer->getFkAnimerFormation()) {
                 return $this->json(['error' => 'La formation ne peut pas etre vide']);
             }
@@ -155,7 +159,7 @@ class ApiController extends AbstractController
             if (null == $animer->getDate()) {
                 return $this->json(['error' => 'Le formateur ne peut pas etre vide']);
             }
-
+            // On vérifie que le crénau est a l'intérieur de la formation
             $dateDebut = $animer->getFkAnimerFormation()->getDateDebut();
             $dateFin = $animer->getFkAnimerFormation()->getDateFin();
             $dateSasie = $animer->getDate();
@@ -166,7 +170,7 @@ class ApiController extends AbstractController
             if ($dateFin < $dateSasie) {
                 return $this->json(['error' => 'La date de fin est antérieure à la date choisie.']);
             }
-
+            // Si les vérification sont ok on enregistre
             try {
                 $em->persist($animer);
                 $em->flush();
@@ -178,16 +182,19 @@ class ApiController extends AbstractController
 
         return $this->json(['error' => 'Une erreur est survenue...']);
     }
+
+
     /**
      * @Route("formateur/listAnimer/{id}", name="listAnimer", methods={"GET"})
      * recupération planning formateurs
      */
     public function listAnimer(User $user, UserRepository $repo)
     {
+        // On récupère les crénaux d'un utilisateurs
         $animers = $user->getAnimers();
-        // $animers = $repo->getByFormateurIdEvent($id);
         $data = [];
         foreach ($animers as $animer) {
+            // On construit l'objet evenement comme l'attends fullcalendar
             $start = clone $animer->getDate();
             $end = clone $animer->getDate();
             $typeJournee = $animer->getTypeJournee();
@@ -223,8 +230,10 @@ class ApiController extends AbstractController
         return $this->json($data);
     }
 
+
     /**
      * @Route("deleteAnimer/{id}", name="deleteAnimer", methods={"GET"})
+     * Permet la suppression d'un crénau
      */
     public function deleteAnimer(EntityManagerInterface $em, Animer $animer)
     {
@@ -236,6 +245,7 @@ class ApiController extends AbstractController
             return $this->json(false);
         }
     }
+
 
     /**
      * @Route("editAnimer/{id}", name="editAnimer", methods={"POST"})
@@ -258,9 +268,10 @@ class ApiController extends AbstractController
         }
     }
 
+
     /**
      * @Route("isDispo/", name="isDispo", methods={"POST"})
-     * Gestion de la dispo dun formateur
+     * Gestion de la dispo dun formateur.
      */
     public function isDispo(EntityManagerInterface $em, AnimerRepository $repo, Request $request)
     {
