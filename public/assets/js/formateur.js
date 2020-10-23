@@ -34,16 +34,16 @@ $(document).ready(function () {
 	 * Fonction qui reload les events
 	 */
 	function reloadData() {
-		// calendar.removeEvents();
-		// $('#calendar').fullCalendar('removeEventSources');
 		let allEvent = calendar.getEvents();
 		allEvent.forEach(e => {
+			// On remove tous les evenements
 			e.remove();
 		});
 
 		let idFormateur = window.location.pathname.split("/").pop();
 		$.get('/api/formateur/listAnimer/' + idFormateur, function (data) {
 			data.forEach(evenement => {
+				// On récupère tous les evenements
 				calendar.addEvent(evenement)
 
 			})
@@ -52,6 +52,7 @@ $(document).ready(function () {
 
 	reloadData();
 
+	// Redirige quand on change le formateur
 	$('#listFormateur').change(() => {
 		window.location.href = '/formateur/' + $('#listFormateur').val();
 	})

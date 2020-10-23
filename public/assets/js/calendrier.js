@@ -9,22 +9,18 @@ $(document).ready(function () {
 	// On récupère le calendrier et on l'initialise
 	let calendarElt = document.querySelector("#calendrier")
 	let calendar = new FullCalendar.Calendar(calendarElt, {
-
 		initialView: 'dayGridMonth',
 		locale: 'fr',
 		timeZone: 'Europe/Paris',
 		dayHeaderFormat: {
 			weekday: 'long',
 		},
-		headerToolbar: { // affichage des boutons (, -> pas despace)
+		headerToolbar: { // affichage des boutons ("," -> pas despace)
 			start: 'prev,next today',
 			center: 'title',
 			end: 'dayGridMonth,timeGridWeek,listWeek'
 		},
-		eventClick: afficheInfo,
-		// editable: true,
-		// eventResizableFromStart: true,
-		// selectable: true,
+		eventClick: afficheInfo, // Quand on click sur un évènement on lance cette fonction
 		weekends: false,
 		weekNumbers: true,
 		businessHours: {
@@ -33,7 +29,7 @@ $(document).ready(function () {
 			startTime: '08:00', // Début de journée (avant grisé)
 			endTime: '18:00', // Fin de journée (après grisé)
 		},
-		dateClick: dateClickAdd,
+		dateClick: dateClickAdd, // Quand on click sur une date on lance cette fonction
 	})
 	// On lance le rendu du calendrier
 	calendar.render()
@@ -43,7 +39,7 @@ $(document).ready(function () {
 	 */
 	function dateClickAdd(info) {
 		if (modeFonctionnement !== 'liste') {
-			// si une seul checkbox est cochée, alors on selectionne la formation dans le select
+			// si une seul checkbox est cochée, alors on selectionne la formation dans le select d'ajout
 			let checkedCheckbox = [];
 			$('.checkboxformation').each((k, checkbox) => {
 				if ($(checkbox).is(':checked')) {
@@ -54,20 +50,22 @@ $(document).ready(function () {
 				$('#fkAnimerFormation').val(checkedCheckbox[0]);
 				$('#fkAnimerFormation').trigger('change');
 			}
-
-
+			// On affiche la modal
 			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 			let dateObjet = new Date(info.dateStr);
 			$('#modalAjoutDate').modal('show');
 			$('#modalAjoutDateTitle').html('Enregistrement pour le ' + dateObjet.toLocaleDateString('fr-FR', options));
+			// On rempli la date clicquée
 			$('#date').val(info.dateStr);
 		}
 	}
 
 	/**
 	 * Function de gestion des affichages d'infos
+	 * @param info : information de levenement cliqué
 	 */
 	function afficheInfo(info) {
+		// Définition des variables utiles
 		const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 		const options2 = { timeZone: "UTC" };
 		let dateObjet = new Date(info.event.start);
@@ -83,6 +81,7 @@ $(document).ready(function () {
 			$('#modalAfficheDatesFormation').html('<table><tr><td class="p-2">Formation sur la journée</td></tr>'
 				+ '<tr><td class="p-2">Formateur : '
 				+ formateur + '</td></tr></table>')
+			// Affiche le bouton de suppression si le formateur est le propriétaire du crénau ou si admin
 			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
 				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
 			};
@@ -107,7 +106,7 @@ $(document).ready(function () {
 				+ dateObjet2.toLocaleDateString('fr-FR', options) + ' à '
 				+ dateObjet2.toLocaleTimeString('fr-FR', options2) + '</td>'
 				+ '</tr>' + '<tr>' + '<td class="p-2">' + 'Formateur : ' + formateur + '</td>' + '</tr></table>')
-
+			// Affiche le bouton de suppression si le formateur est le propriétaire du crénau ou si admin
 			if (isAdmin || idFormateur == info.event.extendedProps.idFormateur) {
 				$('#modalAfficheDatesFormation').append('<a data-animer="' + info.event.id + '" class="btn btn-danger m-2 js-deleteAnimer">Supprimer</a>');
 			};
@@ -118,14 +117,13 @@ $(document).ready(function () {
 	 * Fonction qui reload les events
 	 */
 	function reloadData() {
-		// calendar.removeEvents();
-		// $('#calendar').fullCalendar('removeEventSources');
 		let allEvent = calendar.getEvents();
 		allEvent.forEach(e => {
+			// On remove tous les evenements
 			e.remove();
 		});
 
-		// On affiche les jours férié
+		// On affiche les jours férié via api gouv.fr
 		if (AFFICHE_JF) {
 			$.get(urlJF, function (data) {
 				let events = [];
@@ -133,7 +131,7 @@ $(document).ready(function () {
 				Object.keys(data).forEach(key => {
 					let date = new Date(key);
 					let now = new Date();
-					now.setFullYear(now.getFullYear() - 1);
+					now.setFullYear(now.getFullYear() - 1); // On filtre les JF antérieur a 1 an
 					if (date > now) {
 						let event = [];
 						event['title'] = 'Jour Férié';
@@ -141,7 +139,7 @@ $(document).ready(function () {
 						event['start'] = key;
 						event['backgroundColor'] = '#F25E57';
 						event['borderColor'] = '#F25E57';
-						calendar.addEvent(event);
+						calendar.addEvent(event); // on ajoute au calendrier
 					}
 				});
 
@@ -153,14 +151,12 @@ $(document).ready(function () {
 			// On récupère la liste des formation dont la date de fin est postérieur a aujourd'hui
 			$.get('/api/formation/listnotended', function (data) {
 				data.forEach(evenement => {
-
+					// On vérifie que l'evenement doit etre affiché
 					if ($('.checkboxformation[data-id="' + evenement.id + '"]').is(':checked')) {
-
 						calendar.addEvent(evenement)
 					}
 				})
 			});
-
 			// On change le mode de fonctionnement
 			modeFonctionnement = 'liste';
 		} else {
@@ -205,11 +201,8 @@ $(document).ready(function () {
 						})
 					}
 				})
-
-
-
 				// On change le mode de fonctionnement
-				modeFonctionnement = 'liste';
+				modeFonctionnement = 'formation';
 			}
 		}
 	}
@@ -239,25 +232,21 @@ $(document).ready(function () {
 
 	// Gestion du cochage / décochage des checkboxs formations en fct du check général
 	$('#listeFormation').change(function () {
-
 		if ($('#listeFormation').is(':checked')) {
-
 			$('.checkboxformation').each((k, checkbox) => $(checkbox).prop("checked", true));
-
 		} else {
-
 			$('.checkboxformation').each((k, checkbox) => $(checkbox).prop("checked", false));
 		}
-
 		reloadData();
-
 	});
+
 	$('.listformation').change(reloadData);
 
 	// Gestion du datepicker
 	$("#date").datepicker();
 	$("#date").datepicker("option", "dateFormat", 'yy-mm-dd');
 
+	// Fonction ajax qui géré l'ajout de crénau
 	$('#js-valid-ajout').click((e) => {
 		e.preventDefault();
 		$.ajax({
@@ -281,22 +270,16 @@ $(document).ready(function () {
 
 	// Gestion du bouton "En savoir plus" de la modale
 	$('#modalAfficheInfo').click((e) => {
-
 		if (e.target.nodeName != 'BUTTON') {
 			e.preventDefault();
 		} else {
-
 			$('input[type=checkbox]').each((k, checkbox) => {
-
 				let idFormation = $('#js-ensavoirplus').data('formation');
-
 				if ($(checkbox).data('id') == idFormation) {
-
 					$(checkbox).prop("checked", true);
 				}
 				else { $(checkbox).prop("checked", false); }
 			});
-
 
 			$('#modalAfficheInfo').modal('hide');
 			reloadData();
