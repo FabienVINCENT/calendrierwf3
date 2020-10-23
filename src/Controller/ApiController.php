@@ -260,7 +260,7 @@ class ApiController extends AbstractController
 
     /**
      * @Route("isDispo/", name="isDispo", methods={"POST"})
-     * Gestion edit drag&drop
+     * Gestion de la dispo dun formateur
      */
     public function isDispo(EntityManagerInterface $em, AnimerRepository $repo, Request $request)
     {
